@@ -171,15 +171,12 @@ const sunlight = new THREE.PointLight( 0xffffff, 3, 0, 0.1 );
 
 scene.add(sunlight, ambient);
 
-// skysphere
+// skysphere / background
 const textureEquirec = loader.load( 'data/starmap_2020_8k.jpg' );
 textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.colorSpace = THREE.SRGBColorSpace;
 scene.background = textureEquirec;
-const geometry = new THREE.IcosahedronGeometry( 1000, 2 );
-const sphereMaterial = new THREE.MeshBasicMaterial( { envMap: textureEquirec } );
-const sphereMesh = new THREE.Mesh( geometry, sphereMaterial );
-scene.add( sphereMesh );
+scene.environment = textureEquirec;
 
 // make sun
 function createSunGlow() {
