@@ -1,6 +1,6 @@
 import * as ORR from "./init.js";
-import * as THREE from "../../../node_modules/three/build/three.module.js";
-import { mergeGeometries } from "../../../node_modules/three/examples/jsm/utils/BufferGeometryUtils.js";
+import * as THREE from "../../../vendor/three/build/three.module.js";
+import { mergeGeometries } from "../../../vendor/three/examples/jsm/utils/BufferGeometryUtils.js";
 import $ from "../../jquery/jquery.module.js";
 
 const gratRadius = 1000;
