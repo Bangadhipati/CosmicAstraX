@@ -349,20 +349,11 @@
                     });
                 }
 
-                // Close search on escape key or clicking outside
+                // Close search on escape key
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape' && topNav.classList.contains('search-active')) {
                         topNav.classList.remove('search-active');
                         if (searchInput) searchInput.blur();
-                    }
-                });
-
-                document.addEventListener('click', function(e) {
-                    if (topNav.classList.contains('search-active')) {
-                        const searchWrap = document.getElementById('nav-search-wrapper');
-                        if (searchWrap && !searchWrap.contains(e.target) && !searchToggleBtn.contains(e.target)) {
-                            topNav.classList.remove('search-active');
-                        }
                     }
                 });
 
