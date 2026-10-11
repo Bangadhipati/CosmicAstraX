@@ -1,7 +1,7 @@
 
 # CosmicAstraX
 
-### *Interactive 3D Solar System Orrery & Astronomical Ephemeris Simulator*
+### *Interactive 3D Solar System Orrery Web App*
 
 <img width="2864" height="1536" alt="screenshot-1791722853700" src="https://github.com/user-attachments/assets/84575623-166b-4779-ba0c-521c2f4e9fca" />
 
