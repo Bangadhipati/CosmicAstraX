@@ -684,7 +684,7 @@
         <!-- INFO MODAL -->
         <div id="project-info-modal" class="modal-overlay" style="display: none;">
             <div class="modal-content splash-card">
-                <button id="close-info-modal" class="close-btn">
+                <button id="close-info-modal" class="close-btn" title="Close" aria-label="Close dialog">
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -850,6 +850,7 @@
                 const closeBtn = document.getElementById('close-info-modal');
                 
                 infoBtn.addEventListener('click', function() {
+                    try { $(infoBtn).tooltip('close'); } catch(e) {}
                     infoModal.style.display = 'flex';
                     setTimeout(() => {
                         infoModal.style.opacity = '1';
@@ -858,6 +859,7 @@
                 });
                 
                 closeBtn.addEventListener('click', function() {
+                    try { $(closeBtn).tooltip('close'); } catch(e) {}
                     closeBtn.classList.add('closing');
                     infoModal.style.opacity = '0';
                     setTimeout(() => {
