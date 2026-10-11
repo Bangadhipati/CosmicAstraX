@@ -326,16 +326,6 @@ $("#autocomplete").autocomplete({
 });
 
 $(function () {
-    // Removed accordion initialization as the UI is now a distributed layout
-    // Global ultra-premium tooltip with pure GPU-accelerated CSS animations
-    $(document).tooltip({
-        items: "[title]:not(#autocomplete)",
-        show: false,
-        hide: false,
-        track: false,
-        position: { my: "center bottom-8", at: "center top", collision: "flipfit" }
-    });
-    
     // Initialize datepicker
     $("#custom-date-input").datepicker({
         dateFormat: "dd-mm-yy",
