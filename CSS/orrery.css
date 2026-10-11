@@ -13,6 +13,10 @@ html, body {
     font-family: 'Outfit', sans-serif;
     color: #e0e0ff;
     touch-action: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 canvas {
@@ -1265,6 +1269,16 @@ body.calendar-open .calendar-icon {
     white-space: nowrap;
     text-shadow: 0 0 4px #000, 0 0 8px rgba(0,0,0,0.8);
     transition: color 0.3s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input, textarea {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
 }
 .label:hover {
     z-index: 5;

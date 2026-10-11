@@ -646,3 +646,18 @@ $("#slider").slider({
         }
     }
 });
+
+// Clear accidental text selections across the scene/UI on click/pointerdown
+window.addEventListener("pointerdown", function(e) {
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) {
+        return;
+    }
+    const selection = window.getSelection ? window.getSelection() : document.selection;
+    if (selection) {
+        if (selection.empty) {
+            selection.empty();
+        } else if (selection.removeAllRanges) {
+            selection.removeAllRanges();
+        }
+    }
+});
