@@ -327,8 +327,13 @@ $("#autocomplete").autocomplete({
 
 $(function () {
     // Removed accordion initialization as the UI is now a distributed layout
-    placeWidgets();
-    $("#button, #input").tooltip();
+    // Global ultra-premium tooltip for all elements with a title attribute
+    $(document).tooltip({
+        show: { effect: "fadeIn", duration: 140 },
+        hide: { effect: "fadeOut", duration: 100 },
+        track: false,
+        position: { my: "center bottom-8", at: "center top", collision: "flipfit" }
+    });
     
     // Initialize datepicker
     $("#custom-date-input").datepicker({
