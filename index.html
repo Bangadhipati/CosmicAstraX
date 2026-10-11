@@ -854,10 +854,12 @@
                 });
                 
                 closeBtn.addEventListener('click', function() {
+                    closeBtn.classList.add('closing');
                     infoModal.style.opacity = '0';
                     setTimeout(() => {
                         infoModal.style.visibility = 'hidden';
                         infoModal.style.display = 'none';
+                        closeBtn.classList.remove('closing');
                     }, 300);
                 });
                 
