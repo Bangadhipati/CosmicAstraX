@@ -187,31 +187,34 @@ a:hover {
 .modern-nav .nav-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    position: relative;
+    z-index: 50;
 }
 
 .search-toggle-btn {
-    display: none;
+    display: flex;
 }
 
 .search-close-btn {
-    display: none;
     position: absolute;
-    right: 12px;
+    right: 10px;
     background: transparent;
     border: none;
     color: #64748b;
     cursor: pointer;
     padding: 6px;
     border-radius: 50%;
+    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    z-index: 3;
 }
 
 .search-close-btn:hover {
     color: #00f3ff;
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 .nav-btn {
@@ -266,7 +269,85 @@ a:hover {
 }
 
 /* ==========================================================================
-   Responsive Top Navbar for Smaller Screens (<= 900px)
+   Universal Expandable Search Bar (Expands Left on Click)
+   ========================================================================== */
+.modern-nav .nav-center {
+    position: absolute;
+    right: 95px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    pointer-events: none;
+    z-index: 40;
+}
+
+.modern-nav .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 0;
+    opacity: 0;
+    transform: scaleX(0.7) translateX(20px);
+    transform-origin: right center;
+    transition: width 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.modern-nav .search-wrapper input {
+    width: 100%;
+    background: rgba(12, 16, 26, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 243, 255, 0.35);
+    color: #fff;
+    padding: 9px 36px 9px 42px;
+    border-radius: 24px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 400;
+    outline: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 243, 255, 0.15), inset 0 2px 6px rgba(0,0,0,0.4);
+    box-sizing: border-box;
+}
+
+.modern-nav .search-wrapper input:focus {
+    border-color: #00f3ff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 243, 255, 0.35), inset 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.modern-nav .search-wrapper input::placeholder {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    color: #00f3ff;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Active State: Desktop & Large Screens (Compact ~320px width on right) */
+.modern-nav.search-active .search-wrapper {
+    width: 330px;
+    opacity: 1;
+    transform: scaleX(1) translateX(0);
+    pointer-events: auto;
+}
+
+.modern-nav.search-active #search-toggle-btn {
+    background: rgba(0, 243, 255, 0.2);
+    border-color: #00f3ff;
+    color: #00f3ff;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+}
+
+/* ==========================================================================
+   Responsive Adaptations for Smaller Screens (<= 900px)
    ========================================================================== */
 @media (max-width: 900px) {
     .modern-nav {
@@ -279,40 +360,15 @@ a:hover {
     }
 
     .modern-nav .nav-center {
-        position: absolute;
-        top: 0;
         right: 0;
-        bottom: 0;
         left: 0;
         padding: 10px 18px;
-        align-items: center;
-        justify-content: flex-end;
-        pointer-events: none;
-        z-index: 20;
     }
 
-    .modern-nav .search-wrapper {
-        width: 0;
-        opacity: 0;
-        transform: translateX(30px);
-        transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        pointer-events: none;
-        overflow: hidden;
-    }
-
-    .modern-nav .search-wrapper input {
-        padding: 10px 38px 10px 42px;
-        font-size: 0.9rem;
-    }
-
-    .search-toggle-btn {
-        display: flex;
-    }
-
-    /* When search is toggled open on small screens */
+    /* On mobile/smaller screens: expands full width and brand fades out */
     .modern-nav.search-active .nav-left {
         opacity: 0;
-        transform: translateX(-25px);
+        transform: translateX(-20px);
         pointer-events: none;
     }
 
@@ -321,19 +377,8 @@ a:hover {
         pointer-events: none;
     }
 
-    .modern-nav.search-active .nav-center {
-        pointer-events: auto;
-    }
-
     .modern-nav.search-active .search-wrapper {
         width: 100%;
-        opacity: 1;
-        transform: translateX(0);
-        pointer-events: auto;
-    }
-
-    .modern-nav.search-active .search-close-btn {
-        display: flex;
     }
 }
 
