@@ -57,6 +57,416 @@
         
     </head>
     <body>
+        <!-- ==========================================================================
+             ULTRA-PREMIUM HERO LANDING SCREEN
+             ========================================================================== -->
+        <div id="landing-overlay">
+            <div class="landing-bg-layer"></div>
+            <div class="landing-ambient-dust"></div>
+
+            <!-- Landing Navigation Bar: Identical layout and styling to modern-nav -->
+            <header class="modern-nav landing-navbar">
+                <div class="nav-left">
+                    <img src="data/CosmicAstraX.png" alt="CosmicAstraX Logo" class="ca-logo">
+                    <div class="nav-text">
+                        <span class="main-text">CosmicAstraX</span>
+                        <span class="sub-text">From Family of AstraGenX</span>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <button id="landing-info-icon-btn" class="nav-btn info-icon-btn" title="About CosmicAstraX" aria-label="About Project">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Section: Perfectly proportioned to fit in 1 single viewport -->
+            <main class="landing-hero">
+                <div class="hero-content-card">
+                    <div class="hero-badge">
+                        <span class="hero-badge-pulse"></span>
+                        Interactive 3D Celestial Mechanics Simulator
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Journey Across the <span class="title-gradient">Solar System</span> in Real-Time 3D
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Accurately calculate and observe planetary ephemerides, moons, asteroids, and periodic comets across centuries using rigorous <strong>Newton-Raphson orbital mechanics</strong> powered by <strong>NASA & ISRO</strong> open data.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <button id="hero-start-btn" class="hero-btn hero-btn-start">
+                            <span>Explore Solar System</span>
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                        <button id="hero-info-btn" class="hero-btn hero-btn-info">
+                            <svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span>More Information</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Space Agencies Appreciation Section -->
+            <footer class="landing-agencies-section">
+                <!-- Left: Initiated By AstraGenX -->
+                <div class="initiator-brand-block">
+                    <span class="initiator-subtext">Project CosmicAstraX Initiated By</span>
+                    <div class="initiator-content-row">
+                        <img src="data/org/AstraGenX%20Logo.png" alt="AstraGenX Logo" class="initiator-logo-img">
+                        <div class="initiator-text-col">
+                            <span class="initiator-company-name">AstraGenX</span>
+                            <span class="initiator-motto">Innovating With Righteousness</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vertical Divider Line -->
+                <div class="footer-divider-vertical"></div>
+
+                <!-- Right: Continuous Marquee of Space Agencies -->
+                <div class="agencies-marquee-wrapper">
+                    <div class="agencies-tribute-heading">
+                        <span>Honoring Pioneers of Space Science & Planetary Research</span>
+                        <span class="heart-icon">♥</span>
+                    </div>
+                    <div class="marquee-track-container">
+                        <div class="marquee-track">
+                            <!-- Group 1 -->
+                            <div class="marquee-group">
+                                <div class="agency-badge-pill" title="Indian Space Research Organisation">
+                                    <img src="data/org/isro.png" alt="ISRO Logo" class="agency-logo-img">
+                                    <span class="agency-name">ISRO</span>
+                                    <span class="agency-country">India</span>
+                                </div>
+                                <div class="agency-badge-pill" title="National Aeronautics and Space Administration">
+                                    <img src="data/org/nasa.png" alt="NASA Logo" class="agency-logo-img">
+                                    <span class="agency-name">NASA</span>
+                                    <span class="agency-country">United States</span>
+                                </div>
+                                <div class="agency-badge-pill" title="European Space Agency">
+                                    <img src="data/org/esa.png" alt="ESA Logo" class="agency-logo-img">
+                                    <span class="agency-name">ESA</span>
+                                    <span class="agency-country">Europe</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Japan Aerospace Exploration Agency">
+                                    <img src="data/org/jaxa.png" alt="JAXA Logo" class="agency-logo-img">
+                                    <span class="agency-name">JAXA</span>
+                                    <span class="agency-country">Japan</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Roscosmos State Corporation for Space Activities">
+                                    <img src="data/org/roscosmos.png" alt="Roscosmos Logo" class="agency-logo-img">
+                                    <span class="agency-name">Roscosmos</span>
+                                    <span class="agency-country">Russia</span>
+                                </div>
+                                <div class="agency-badge-pill" title="China National Space Administration">
+                                    <img src="data/org/cnsa.png" alt="CNSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CNSA</span>
+                                    <span class="agency-country">China</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Canadian Space Agency">
+                                    <img src="data/org/csa.png" alt="CSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CSA</span>
+                                    <span class="agency-country">Canada</span>
+                                </div>
+                                <div class="agency-badge-pill" title="German Aerospace Center">
+                                    <img src="data/org/dlr.png" alt="DLR Logo" class="agency-logo-img">
+                                    <span class="agency-name">DLR</span>
+                                    <span class="agency-country">Germany</span>
+                                </div>
+                            </div>
+                            <!-- Group 2 -->
+                            <div class="marquee-group" aria-hidden="true">
+                                <div class="agency-badge-pill" title="Indian Space Research Organisation">
+                                    <img src="data/org/isro.png" alt="ISRO Logo" class="agency-logo-img">
+                                    <span class="agency-name">ISRO</span>
+                                    <span class="agency-country">India</span>
+                                </div>
+                                <div class="agency-badge-pill" title="National Aeronautics and Space Administration">
+                                    <img src="data/org/nasa.png" alt="NASA Logo" class="agency-logo-img">
+                                    <span class="agency-name">NASA</span>
+                                    <span class="agency-country">United States</span>
+                                </div>
+                                <div class="agency-badge-pill" title="European Space Agency">
+                                    <img src="data/org/esa.png" alt="ESA Logo" class="agency-logo-img">
+                                    <span class="agency-name">ESA</span>
+                                    <span class="agency-country">Europe</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Japan Aerospace Exploration Agency">
+                                    <img src="data/org/jaxa.png" alt="JAXA Logo" class="agency-logo-img">
+                                    <span class="agency-name">JAXA</span>
+                                    <span class="agency-country">Japan</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Roscosmos State Corporation for Space Activities">
+                                    <img src="data/org/roscosmos.png" alt="Roscosmos Logo" class="agency-logo-img">
+                                    <span class="agency-name">Roscosmos</span>
+                                    <span class="agency-country">Russia</span>
+                                </div>
+                                <div class="agency-badge-pill" title="China National Space Administration">
+                                    <img src="data/org/cnsa.png" alt="CNSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CNSA</span>
+                                    <span class="agency-country">China</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Canadian Space Agency">
+                                    <img src="data/org/csa.png" alt="CSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CSA</span>
+                                    <span class="agency-country">Canada</span>
+                                </div>
+                                <div class="agency-badge-pill" title="German Aerospace Center">
+                                    <img src="data/org/dlr.png" alt="DLR Logo" class="agency-logo-img">
+                                    <span class="agency-name">DLR</span>
+                                    <span class="agency-country">Germany</span>
+                                </div>
+                            </div>
+                            <!-- Group 3 -->
+                            <div class="marquee-group" aria-hidden="true">
+                                <div class="agency-badge-pill" title="Indian Space Research Organisation">
+                                    <img src="data/org/isro.png" alt="ISRO Logo" class="agency-logo-img">
+                                    <span class="agency-name">ISRO</span>
+                                    <span class="agency-country">India</span>
+                                </div>
+                                <div class="agency-badge-pill" title="National Aeronautics and Space Administration">
+                                    <img src="data/org/nasa.png" alt="NASA Logo" class="agency-logo-img">
+                                    <span class="agency-name">NASA</span>
+                                    <span class="agency-country">United States</span>
+                                </div>
+                                <div class="agency-badge-pill" title="European Space Agency">
+                                    <img src="data/org/esa.png" alt="ESA Logo" class="agency-logo-img">
+                                    <span class="agency-name">ESA</span>
+                                    <span class="agency-country">Europe</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Japan Aerospace Exploration Agency">
+                                    <img src="data/org/jaxa.png" alt="JAXA Logo" class="agency-logo-img">
+                                    <span class="agency-name">JAXA</span>
+                                    <span class="agency-country">Japan</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Roscosmos State Corporation for Space Activities">
+                                    <img src="data/org/roscosmos.png" alt="Roscosmos Logo" class="agency-logo-img">
+                                    <span class="agency-name">Roscosmos</span>
+                                    <span class="agency-country">Russia</span>
+                                </div>
+                                <div class="agency-badge-pill" title="China National Space Administration">
+                                    <img src="data/org/cnsa.png" alt="CNSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CNSA</span>
+                                    <span class="agency-country">China</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Canadian Space Agency">
+                                    <img src="data/org/csa.png" alt="CSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CSA</span>
+                                    <span class="agency-country">Canada</span>
+                                </div>
+                                <div class="agency-badge-pill" title="German Aerospace Center">
+                                    <img src="data/org/dlr.png" alt="DLR Logo" class="agency-logo-img">
+                                    <span class="agency-name">DLR</span>
+                                    <span class="agency-country">Germany</span>
+                                </div>
+                            </div>
+                            <!-- Group 4 -->
+                            <div class="marquee-group" aria-hidden="true">
+                                <div class="agency-badge-pill" title="Indian Space Research Organisation">
+                                    <img src="data/org/isro.png" alt="ISRO Logo" class="agency-logo-img">
+                                    <span class="agency-name">ISRO</span>
+                                    <span class="agency-country">India</span>
+                                </div>
+                                <div class="agency-badge-pill" title="National Aeronautics and Space Administration">
+                                    <img src="data/org/nasa.png" alt="NASA Logo" class="agency-logo-img">
+                                    <span class="agency-name">NASA</span>
+                                    <span class="agency-country">United States</span>
+                                </div>
+                                <div class="agency-badge-pill" title="European Space Agency">
+                                    <img src="data/org/esa.png" alt="ESA Logo" class="agency-logo-img">
+                                    <span class="agency-name">ESA</span>
+                                    <span class="agency-country">Europe</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Japan Aerospace Exploration Agency">
+                                    <img src="data/org/jaxa.png" alt="JAXA Logo" class="agency-logo-img">
+                                    <span class="agency-name">JAXA</span>
+                                    <span class="agency-country">Japan</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Roscosmos State Corporation for Space Activities">
+                                    <img src="data/org/roscosmos.png" alt="Roscosmos Logo" class="agency-logo-img">
+                                    <span class="agency-name">Roscosmos</span>
+                                    <span class="agency-country">Russia</span>
+                                </div>
+                                <div class="agency-badge-pill" title="China National Space Administration">
+                                    <img src="data/org/cnsa.png" alt="CNSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CNSA</span>
+                                    <span class="agency-country">China</span>
+                                </div>
+                                <div class="agency-badge-pill" title="Canadian Space Agency">
+                                    <img src="data/org/csa.png" alt="CSA Logo" class="agency-logo-img">
+                                    <span class="agency-name">CSA</span>
+                                    <span class="agency-country">Canada</span>
+                                </div>
+                                <div class="agency-badge-pill" title="German Aerospace Center">
+                                    <img src="data/org/dlr.png" alt="DLR Logo" class="agency-logo-img">
+                                    <span class="agency-name">DLR</span>
+                                    <span class="agency-country">Germany</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- ==========================================================================
+             MORE INFORMATION SLIDE-OUT SIDEBAR DRAWER
+             ========================================================================== -->
+        <div id="info-drawer-backdrop" class="info-drawer-backdrop">
+            <aside class="info-sidebar-drawer" id="info-sidebar-drawer">
+                <div class="drawer-header">
+                    <div class="drawer-header-left">
+                        <div class="drawer-badge">
+                            <span class="drawer-badge-dot"></span>
+                            Telemetry & Architecture
+                        </div>
+                        <h2 class="drawer-header-title">
+                            CosmicAstraX Overview
+                        </h2>
+                    </div>
+                    <button id="drawer-close-btn" class="drawer-close-btn" title="Close details" aria-label="Close sidebar">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="drawer-body">
+                    <!-- Quick Specs Pill Row -->
+                    <div class="drawer-stats-grid">
+                        <div class="drawer-stat-card">
+                            <span class="stat-number">60 FPS</span>
+                            <span class="stat-label">Solver Cycle</span>
+                        </div>
+                        <div class="drawer-stat-card">
+                            <span class="stat-number">6,000 Yrs</span>
+                            <span class="stat-label">Ephemeris Range</span>
+                        </div>
+                        <div class="drawer-stat-card">
+                            <span class="stat-number">1,400 AU</span>
+                            <span class="stat-label">Max Horizon</span>
+                        </div>
+                    </div>
+
+                    <div class="info-section-card">
+                        <div class="info-card-title">
+                            <span class="info-icon-wrapper">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </span>
+                            <span>About Project & Vision</span>
+                        </div>
+                        <p class="info-card-text">
+                            <strong>CosmicAstraX</strong> is an advanced, hardware-accelerated 3D Orrery and celestial mechanics simulator crafted by <strong>Team AstraGenX</strong> under the direction of <strong>Debarghya Bhowmick</strong>, initially created for the <strong>NASA Space Apps Challenge 2024</strong>.
+                        </p>
+                    </div>
+
+                    <div class="info-section-card">
+                        <div class="info-card-title">
+                            <span class="info-icon-wrapper">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M4.93 4.93l4.24 4.24"></path><path d="M14.83 9.17l4.24-4.24"></path><path d="M14.83 14.83l4.24 4.24"></path><path d="M9.17 14.83L4.93 19.07"></path><circle cx="12" cy="12" r="4"></circle></svg>
+                            </span>
+                            <span>Analytical Orbital Engine</span>
+                        </div>
+                        <p class="info-card-text">
+                            Unlike pre-rendered animations, CosmicAstraX solves <strong>Kepler's Equation</strong> (<span class="math-eq">M = E - e sin E</span>) at 60 FPS using an analytical <strong>Newton-Raphson orbital solver</strong> spanning from <strong>3000 BC to 3000 AD</strong>.
+                        </p>
+                        <table class="drawer-specs-table">
+                            <tbody>
+                                <tr>
+                                    <td class="table-key">Orbital Elements</td>
+                                    <td class="table-val">Semi-major axis, eccentricity, inclination, mean longitude, perihelion argument, and ascending node.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Deep-Space Horizon</td>
+                                    <td class="table-val">View calibrated up to 1,400 AU, rendering extreme bodies from asteroid <em>1566 Icarus</em> to dwarf planet <em>90377 Sedna</em>.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Trajectory Highlighting</td>
+                                    <td class="table-val">Focused celestial body glows radiant cyan/gold while ambient paths soften.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="info-section-card">
+                        <div class="info-card-title">
+                            <span class="info-icon-wrapper">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </span>
+                            <span>Verified Scientific Telemetry</span>
+                        </div>
+                        <p class="info-card-text">
+                            Continuous data baselines are sourced directly from verified global space agencies and research institutes:
+                        </p>
+                        <table class="drawer-specs-table">
+                            <tbody>
+                                <tr>
+                                    <td class="table-key">NASA JPL Horizons</td>
+                                    <td class="table-val">High-precision planetary ephemerides and physical constants.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">ISRO Open Data</td>
+                                    <td class="table-val">Lunar telemetry, planetary research, and deep-space mission benchmarks.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">NeoWs Service</td>
+                                    <td class="table-val">Near Earth asteroid trajectories and close-approach metrics.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Astronomy Engine</td>
+                                    <td class="table-val">Microsecond ephemeris math and Three.js WebGL graphics core.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="info-section-card">
+                        <div class="info-card-title">
+                            <span class="info-icon-wrapper">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="8" cy="12" r="2"></circle><path d="M16 10v4"></path><path d="M14 12h4"></path></svg>
+                            </span>
+                            <span>Navigation & Controls</span>
+                        </div>
+                        <table class="drawer-specs-table">
+                            <tbody>
+                                <tr>
+                                    <td class="table-key">Left Click + Drag</td>
+                                    <td class="table-val">Orbit and rotate perspective around celestial targets.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Scroll / Pinch</td>
+                                    <td class="table-val">Smooth deep-space zoom across the heliosphere.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Timeline HUD</td>
+                                    <td class="table-val">Scrub time forward/backward, jump to custom dates, and modulate rates.</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Universal Search</td>
+                                    <td class="table-val">Instant autocomplete lookup for planets, moons, asteroids, and missions.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
         <!-- UI Overlay Layer (Kept ID for potential JS toggling via F2) -->
         <div id="inputBox" class="ui-layer">
             
@@ -300,6 +710,128 @@
                     const clearSplashBtn = document.getElementById('clearSplash');
                     if(clearSplashBtn) clearSplashBtn.click();
                 }, 100);
+
+                // ======================================================================
+                // LANDING SCREEN & MORE INFORMATION DRAWER LOGIC
+                // ======================================================================
+                const landingOverlay = document.getElementById('landing-overlay');
+                const heroStartBtn = document.getElementById('hero-start-btn');
+                const heroInfoBtn = document.getElementById('hero-info-btn');
+                const landingInfoIconBtn = document.getElementById('landing-info-icon-btn');
+                const infoDrawerBackdrop = document.getElementById('info-drawer-backdrop');
+                const drawerCloseBtn = document.getElementById('drawer-close-btn');
+                const navBackToLandingBtn = document.getElementById('nav-back-to-landing-btn');
+
+                function openInfoDrawer() {
+                    if (infoDrawerBackdrop) {
+                        infoDrawerBackdrop.classList.add('drawer-open');
+                    }
+                }
+
+                function closeInfoDrawer() {
+                    if (infoDrawerBackdrop) {
+                        infoDrawerBackdrop.classList.remove('drawer-open');
+                    }
+                }
+
+                function hideLandingPage(pushHistory = true, instant = false) {
+                    if (!landingOverlay) return;
+                    if (instant) {
+                        landingOverlay.classList.add('landing-hidden');
+                        landingOverlay.style.display = 'none';
+                    } else {
+                        landingOverlay.classList.add('landing-hidden');
+                        setTimeout(() => {
+                            landingOverlay.style.display = 'none';
+                        }, 600);
+                    }
+                    if (pushHistory && window.history && window.history.pushState) {
+                        window.history.pushState({ page: 'orrery' }, '', '#orrery');
+                    } else if (!pushHistory && window.location.hash !== '#orrery') {
+                        window.location.hash = 'orrery';
+                    }
+                }
+
+                function showLandingPage(pushHistory = true) {
+                    if (!landingOverlay) return;
+                    closeInfoDrawer();
+                    landingOverlay.style.display = 'flex';
+                    // Force reflow for smooth transition
+                    void landingOverlay.offsetHeight;
+                    landingOverlay.classList.remove('landing-hidden');
+                    
+                    if (pushHistory && window.history && window.history.pushState) {
+                        window.history.pushState({ page: 'landing' }, '', window.location.pathname + window.location.search);
+                    }
+                }
+
+                // If user refreshes on #orrery, stay on orrery; otherwise show landing page
+                if (window.location.hash === '#orrery') {
+                    hideLandingPage(false, true);
+                } else {
+                    showLandingPage(false);
+                }
+
+                // Start Exploring Button: Closes the landing overlay and unveils 3D Orrery
+                if (heroStartBtn) {
+                    heroStartBtn.addEventListener('click', () => {
+                        hideLandingPage(true, false);
+                    });
+                }
+
+                // Navbar Back Button: Re-opens the landing overlay
+                if (navBackToLandingBtn) {
+                    navBackToLandingBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showLandingPage(true);
+                    });
+                }
+
+                // Browser Back / Forward History Integration
+                window.addEventListener('popstate', (e) => {
+                    if (window.location.hash === '#orrery' || (e.state && e.state.page === 'orrery')) {
+                        hideLandingPage(false, false);
+                    } else {
+                        showLandingPage(false);
+                    }
+                });
+
+                // More Information Buttons: Open the comprehensive information drawer
+                if (heroInfoBtn) {
+                    heroInfoBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openInfoDrawer();
+                    });
+                }
+
+                if (landingInfoIconBtn) {
+                    landingInfoIconBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openInfoDrawer();
+                    });
+                }
+
+                if (drawerCloseBtn) {
+                    drawerCloseBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        closeInfoDrawer();
+                    });
+                }
+
+                if (infoDrawerBackdrop) {
+                    infoDrawerBackdrop.addEventListener('click', (e) => {
+                        if (e.target === infoDrawerBackdrop) {
+                            closeInfoDrawer();
+                        }
+                    });
+                }
+
+                // Close drawer on Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && infoDrawerBackdrop && infoDrawerBackdrop.classList.contains('drawer-open')) {
+                        closeInfoDrawer();
+                    }
+                });
 
                 const infoBtn = document.getElementById('info-btn');
                 const infoModal = document.getElementById('project-info-modal');
