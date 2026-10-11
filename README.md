@@ -1,53 +1,19 @@
-<div align="center">
 
-# 🌌 CosmicAstraX
+# CosmicAstraX
 
 ### *Interactive 3D Solar System Orrery & Astronomical Ephemeris Simulator*
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-cosmicastrax.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://cosmicastrax.netlify.app)
-[![Three.js](https://img.shields.io/badge/Three.js-r156-black?style=for-the-badge&logo=three.js)](https://threejs.org/)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=for-the-badge)](LICENSE)
-[![GitHub repo](https://img.shields.io/badge/GitHub-CosmicAstraX-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bangadhipati/CosmicAstraX)
+<img width="2864" height="1536" alt="image" src="https://github.com/user-attachments/assets/fe0f5a7a-44b5-411d-90c8-fa04f1bf1246" />
 
-<br />
+### 🔗 **[LIVE LINK](https://cosmicastrax.netlify.app)**
 
-### 🔗 **[Explore Live Demo: cosmicastrax.netlify.app](https://cosmicastrax.netlify.app)**
-
-<br />
-
-<p align="center">
-  <strong>Explore the Cosmos in real-time 3D. Accurately calculate and visualize planetary positions, moons, asteroids, and comets across centuries using rigorous Keplerian orbital mechanics.</strong>
-</p>
-
-</div>
-
----
-
-## 📸 Screenshots & Previews
-
-<div align="center">
-
-| 🌌 Full Solar System Overview | 🪐 Planetary Focus & Orbit Highlighting |
-| :---: | :---: |
-| <img src="data/CosmicAstraX.png" alt="CosmicAstraX Overview" width="450"/> | <img src="data/CosmicAstraX.png" alt="CosmicAstraX Planetary Focus" width="450"/> |
-
-| ⏱️ Real-Time Ephemeris & Time Controls | 📊 Live Orbital Telemetry HUD |
-| :---: | :---: |
-| <img src="data/CosmicAstraX.png" alt="CosmicAstraX Time Machine" width="450"/> | <img src="data/CosmicAstraX.png" alt="CosmicAstraX Telemetry" width="450"/> |
-
-*(Replace with live gameplay/in-app screenshots as you capture them)*
-
-</div>
-
----
+Explore the Cosmos in real-time 3D. Accurately calculate and visualize planetary positions, moons, asteroids, and comets across centuries using rigorous Keplerian orbital mechanics.
 
 ## 🌟 About the Project
 
 **CosmicAstraX** is a web-based, hardware-accelerated 3D Orrery and celestial mechanics simulator. Powered by **Three.js** and **WebGL**, it accurately models the Sun, planets, planetary satellites, dwarf planets, near-Earth asteroids (such as *1566 Icarus*), extreme trans-Neptunian objects (such as *90377 Sedna*), and periodic comets (such as *Halley*).
 
 Unlike static planetarium models, CosmicAstraX utilizes an analytical **Newton-Raphson orbital solver** running in real-time within the client browser. It calculates the physical positions and trajectories of celestial bodies across an astronomical window spanning from **3000 BC to 3000 AD**.
-
----
 
 ## 🚀 Key Features
 
@@ -80,8 +46,6 @@ Unlike static planetarium models, CosmicAstraX utilizes an analytical **Newton-R
 
 - **🛡️ UI Touch & Zoom Safeguards**:
   - Intercepted browser pinch/wheel scaling to keep navigation bars, sidebars, and HUD elements crisp and stable across desktop, mobile, and tablet displays.
-
----
 
 ## 🛠️ Tech Stack
 
@@ -119,8 +83,6 @@ Unlike static planetarium models, CosmicAstraX utilizes an analytical **Newton-R
 | **Git** | ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) | Distributed version control system |
 | **GitHub** | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white) | Source code repository and automated deployment triggers |
 
----
-
 ## 🔬 Astronomical Engine & Mathematics
 
 CosmicAstraX computes planetary positions using classical celestial mechanics:
@@ -145,8 +107,6 @@ CosmicAstraX computes planetary positions using classical celestial mechanics:
 4. **Heliocentric 3D Coordinates**:
    True anomaly $\nu$ and radius $r$ are mapped into 3D Cartesian space via Euler angle rotation matrices corresponding to $(I, \Omega, \omega)$.
 
----
-
 ## 🎮 Navigation & Controls
 
 | Input | Action |
@@ -158,9 +118,7 @@ CosmicAstraX computes planetary positions using classical celestial mechanics:
 | **Time Controls (Bottom Bar)**| Play, pause, rewind, fast-forward, or scrub dates |
 | **Reset / Deselect** | Return camera to full system overview and restore default orbits |
 
----
-
-<div align="center">
+<div>
   <sub>Developed with curiosity for space exploration. Made for astronomers, students, and stargazers worldwide.</sub>
   <br />
   <sub>🚀 Live at <a href="https://cosmicastrax.netlify.app">cosmicastrax.netlify.app</a></sub>
