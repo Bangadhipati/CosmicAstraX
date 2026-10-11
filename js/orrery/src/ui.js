@@ -339,7 +339,17 @@ $(function () {
         yearRange: "1000:3000",
         showOn: "button",
         buttonText: "",
+        beforeShow: function(input, inst) {
+            isCalendarOpen = true;
+            $("body").addClass("calendar-open");
+            $("#set-custom-date").addClass("active selected");
+            $("#datepicker-backdrop").stop(true, true).fadeIn(150);
+        },
+        onClose: function(dateText, inst) {
+            closeCustomDatePicker();
+        },
         onSelect: function(dateText) {
+            closeCustomDatePicker();
             // Trigger logic immediately after selection
             setTimeout(() => {
                 const parts = dateText.split("-");
@@ -474,16 +484,85 @@ function submitCustomDate() {
     }
 }
 
-$("#set-custom-date").on("click", function (e) {
-    e.preventDefault();
+let isCalendarOpen = false;
+let lastCalendarToggleTime = 0;
+
+function openCustomDatePicker() {
+    isCalendarOpen = true;
+    $("body").addClass("calendar-open");
+    $("#set-custom-date").addClass("active selected");
+    $("#datepicker-backdrop").stop(true, true).fadeIn(150);
     $("#custom-date-input").datepicker("show");
+}
+
+function closeCustomDatePicker() {
+    isCalendarOpen = false;
+    $("body").removeClass("calendar-open");
+    $("#set-custom-date").removeClass("active selected");
+    $("#datepicker-backdrop").stop(true, true).fadeOut(150);
+    $("#custom-date-input").datepicker("hide");
+}
+
+function toggleCustomDatePicker(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    const now = Date.now();
+    if (now - lastCalendarToggleTime < 250) return;
+    lastCalendarToggleTime = now;
+
+    if (isCalendarOpen) {
+        closeCustomDatePicker();
+    } else {
+        openCustomDatePicker();
+    }
+}
+
+// Stop jQuery UI's document mousedown from closing datepicker prematurely when clicking the toggle icon
+$("#set-custom-date").on("mousedown touchstart", function (e) {
+    e.stopPropagation();
+});
+
+$("#set-custom-date").on("click", function (e) {
+    toggleCustomDatePicker(e);
+});
+
+// If calendar is open, clicking on the manual date entry area (#custom-date-input) closes the calendar
+$("#custom-date-input").on("mousedown touchstart", function (e) {
+    if (isCalendarOpen) {
+        e.stopPropagation();
+    }
+});
+
+$("#custom-date-input").on("click", function (e) {
+    if (isCalendarOpen) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeCustomDatePicker();
+        $(this).blur();
+    }
+});
+
+// Clicking or tapping anywhere outside the calendar (on backdrop) closes the calendar & disables background clicks
+$(document).on("click touchstart", "#datepicker-backdrop", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeCustomDatePicker();
+});
+
+// Close calendar on Escape key
+$(document).on("keydown", function (e) {
+    if (e.key === "Escape" && isCalendarOpen) {
+        closeCustomDatePicker();
+    }
 });
 
 $("#custom-date-input, #custom-time-input").on("keypress", function (e) {
     if (e.which === 13) { // Enter key
         e.preventDefault();
         submitCustomDate();
-        $("#custom-date-input").datepicker("hide");
+        closeCustomDatePicker();
     }
 });
 
