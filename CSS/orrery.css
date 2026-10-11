@@ -3229,7 +3229,7 @@ body .ui-tooltip {
     font-weight: 500 !important;
     letter-spacing: 0.4px !important;
     line-height: 1.25 !important;
-    z-index: 99999 !important;
+    z-index: 2000000 !important;
     max-width: 240px !important;
     width: auto !important;
     pointer-events: none !important;
