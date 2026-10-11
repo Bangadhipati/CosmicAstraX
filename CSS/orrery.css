@@ -412,31 +412,36 @@ a:hover {
    ========================================================================== */
 .modern-bottom {
     position: absolute;
-    bottom: 30px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     z-index: 100;
-    width: max-content;
+    width: auto;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
 }
 
 .bottom-container {
     display: flex;
     align-items: center;
-    background: rgba(15, 15, 18, 0.65);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 15, 18, 0.72);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    padding: 14px 40px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    gap: 50px;
+    padding: 12px 30px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    gap: 36px;
     white-space: nowrap;
-    min-width: 600px;
+    min-width: 0;
+    max-width: 100%;
     justify-content: space-between;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .date-section {
@@ -622,6 +627,112 @@ a:hover {
     letter-spacing: 3px;
     text-transform: uppercase;
     font-weight: 500;
+}
+
+/* ==========================================================================
+   Responsive Adaptations for Bottom Navbar
+   ========================================================================== */
+@media (max-width: 850px) {
+    .modern-bottom {
+        bottom: 16px;
+        max-width: calc(100vw - 20px);
+    }
+
+    .bottom-container {
+        padding: 10px 20px;
+        gap: 20px;
+        border-radius: 20px;
+    }
+
+    #custom-date-input {
+        width: 95px;
+        font-size: 0.88rem;
+    }
+
+    #custom-time-input {
+        width: 65px;
+        font-size: 0.88rem;
+    }
+
+    .speed-indicator {
+        min-width: 50px;
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 560px) {
+    .modern-bottom {
+        bottom: 12px;
+        max-width: calc(100vw - 16px);
+        gap: 8px;
+    }
+
+    .bottom-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 14px;
+        gap: 10px;
+        border-radius: 18px;
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .date-section {
+        align-items: center;
+        width: 100%;
+    }
+
+    .date-input-container {
+        width: 100%;
+        justify-content: center;
+        padding: 5px 8px;
+        gap: 6px;
+    }
+
+    #custom-date-input {
+        width: 90px;
+        font-size: 0.82rem;
+        text-align: center;
+    }
+
+    #custom-time-input {
+        width: 60px;
+        font-size: 0.82rem;
+        text-align: center;
+    }
+
+    .controls-section {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .ctrl-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .play-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    .speed-indicator {
+        min-width: 48px;
+        margin: 0 6px;
+    }
+
+    .speed-val {
+        font-size: 0.88rem;
+    }
+
+    .speed-label {
+        font-size: 0.58rem;
+    }
+
+    .footer-hint {
+        display: none;
+    }
 }
 
 /* ==========================================================================
