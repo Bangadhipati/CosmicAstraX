@@ -3,7 +3,7 @@
 
 ### *Interactive 3D Solar System Orrery & Astronomical Ephemeris Simulator*
 
-<img width="2864" height="1536" alt="image" src="https://github.com/user-attachments/assets/c298e746-7feb-4bff-9fac-1950e06597e6" />
+<img width="2864" height="1536" alt="screenshot-1791722853700" src="https://github.com/user-attachments/assets/84575623-166b-4779-ba0c-521c2f4e9fca" />
 
 ### 🔗 **[LIVE LINK](https://cosmicastrax.netlify.app)**
 
