@@ -11,14 +11,28 @@ const sunGravConstant = 1.32712440042e+20; // gravitational constant for helioce
 const earthBary = 4670 / 388400; // Earth barycentric offset relative to Moon's semimajor axis
 const plutoBary = 2110 / 19600; // Pluto barycentric offset relative to Charon's semimajor axis
 let redrawLabels = false;
+let initialFramesWarmed = 0;
 
 /**
  * MAIN LOOP
  * @param {float} time
  */
 export function animate(time) {
-    redrawLabels = !redrawLabels;
     let clockElapsed = 1 / ORR.clock.getDelta();
+
+    // While landing overlay is actively covering the screen, idle loop to preserve 60fps UI performance
+    const landingEl = document.getElementById("landing-overlay");
+    const isLandingVisible = landingEl && !landingEl.classList.contains("landing-hidden") && landingEl.style.display !== "none";
+
+    if (isLandingVisible && initialFramesWarmed >= 3) {
+        requestAnimationFrame(animate);
+        return;
+    }
+    if (initialFramesWarmed < 3) {
+        initialFramesWarmed++;
+    }
+
+    redrawLabels = !redrawLabels;
     fpsBuffer.push(clockElapsed);
     if (fpsBuffer.length > 19) {
         let sum = 0;

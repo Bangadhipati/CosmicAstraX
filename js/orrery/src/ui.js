@@ -327,10 +327,11 @@ $("#autocomplete").autocomplete({
 
 $(function () {
     // Removed accordion initialization as the UI is now a distributed layout
-    // Global ultra-premium tooltip for all elements with a title attribute
+    // Global ultra-premium tooltip with pure GPU-accelerated CSS animations
     $(document).tooltip({
-        show: { effect: "fadeIn", duration: 140 },
-        hide: { effect: "fadeOut", duration: 100 },
+        items: "[title]",
+        show: false,
+        hide: false,
         track: false,
         position: { my: "center bottom-8", at: "center top", collision: "flipfit" }
     });

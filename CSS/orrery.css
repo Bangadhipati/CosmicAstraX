@@ -2355,10 +2355,14 @@ body.calendar-open .date-input-container {
     font-weight: 600;
     letter-spacing: 0.4px;
     cursor: pointer;
-    transition: all 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    will-change: transform;
+    transform: translateZ(0);
     outline: none;
     text-decoration: none;
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Start Button: Glowing Primary Cyan */
@@ -2366,37 +2370,56 @@ body.calendar-open .date-input-container {
     background: linear-gradient(135deg, #00f3ff 0%, #00a8ff 100%);
     border: none;
     color: #040814;
-    box-shadow: 0 8px 25px rgba(0, 243, 255, 0.4), 0 0 40px rgba(0, 243, 255, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 243, 255, 0.35), 0 0 30px rgba(0, 243, 255, 0.15);
 }
 
 .hero-btn-start:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 12px 35px rgba(0, 243, 255, 0.6), 0 0 50px rgba(0, 243, 255, 0.35);
+    transform: translateY(-2px) scale(1.025) translateZ(0);
+    box-shadow: 0 10px 32px rgba(0, 243, 255, 0.55), 0 0 45px rgba(0, 243, 255, 0.3);
+}
+
+.hero-btn-start:active {
+    transform: translateY(0) scale(0.98) translateZ(0);
+    box-shadow: 0 4px 15px rgba(0, 243, 255, 0.4);
 }
 
 .hero-btn-start svg {
-    transition: transform 0.25s ease;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
 }
 
 .hero-btn-start:hover svg {
-    transform: translateX(3px);
+    transform: translateX(4px);
 }
 
-/* More Information Button: Frosted Glass */
+/* More Information Button: Sleek Frosted Glass (Zero GPU-penalty) */
 .hero-btn-info {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(15, 23, 42, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.18);
     color: #e2e8f0;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .hero-btn-info:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(0, 243, 255, 0.5);
+    background: rgba(22, 32, 54, 0.9);
+    border-color: rgba(0, 243, 255, 0.55);
     color: #00f3ff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 243, 255, 0.2);
+    transform: translateY(-2px) scale(1.025) translateZ(0);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 243, 255, 0.22);
+}
+
+.hero-btn-info:active {
+    transform: translateY(0) scale(0.98) translateZ(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-btn-info svg {
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.hero-btn-info:hover svg {
+    transform: scale(1.1);
 }
 
 /* Space Agencies Appreciation Footer Section */
@@ -2662,18 +2685,21 @@ body.calendar-open .date-input-container {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.72);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index: 100000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), visibility 0.35s ease;
+    pointer-events: none;
+    transition: opacity 0.26s ease, visibility 0.26s ease;
+    will-change: opacity, visibility;
 }
 
 .info-drawer-backdrop.drawer-open {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .info-sidebar-drawer {
@@ -2683,21 +2709,22 @@ body.calendar-open .date-input-container {
     width: min(540px, 100vw);
     height: 100vh;
     height: 100dvh;
-    background: linear-gradient(180deg, rgba(12, 16, 28, 0.98) 0%, rgba(7, 9, 18, 0.99) 100%);
-    backdrop-filter: blur(36px) saturate(200%);
-    -webkit-backdrop-filter: blur(36px) saturate(200%);
-    border-left: 1px solid rgba(0, 243, 255, 0.25);
-    box-shadow: -25px 0 80px rgba(0, 0, 0, 0.9), -5px 0 30px rgba(0, 243, 255, 0.08);
+    background: linear-gradient(180deg, #0d1222 0%, #070a14 100%);
+    border-left: 1px solid rgba(0, 243, 255, 0.3);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.95), -2px 0 20px rgba(0, 243, 255, 0.12);
     z-index: 100001;
-    transform: translateX(100%);
-    transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate3d(100%, 0, 0);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .info-drawer-backdrop.drawer-open .info-sidebar-drawer {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* Header */
@@ -2758,16 +2785,27 @@ body.calendar-open .date-input-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s ease;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform;
     flex-shrink: 0;
+    outline: none;
 }
 
 .drawer-close-btn:hover {
-    background: rgba(255, 51, 102, 0.25);
-    border-color: #ff3366;
-    color: #ff3366;
-    transform: rotate(90deg) scale(1.08);
-    box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+    background: rgba(255, 46, 99, 0.22);
+    border-color: #ff2e63;
+    color: #ff2e63;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 16px rgba(255, 46, 99, 0.5), inset 0 0 8px rgba(255, 46, 99, 0.2);
+}
+
+.drawer-close-btn:active,
+.drawer-close-btn.closing {
+    background: rgba(255, 46, 99, 0.38);
+    border-color: #ff0055;
+    color: #ffffff;
+    transform: rotate(90deg) scale(0.92);
+    box-shadow: 0 0 22px rgba(255, 0, 85, 0.8), inset 0 0 10px rgba(255, 0, 85, 0.5);
 }
 
 /* Body */
@@ -3178,11 +3216,11 @@ body.calendar-open .date-input-container {
    ========================================================================== */
 .ui-tooltip,
 body .ui-tooltip {
-    background: rgba(10, 15, 26, 0.92) !important;
-    backdrop-filter: blur(14px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
-    border: 1px solid rgba(0, 243, 255, 0.3) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 243, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    background: rgba(10, 15, 26, 0.95) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border: 1px solid rgba(0, 243, 255, 0.35) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 243, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
     border-radius: 6px !important;
     padding: 3px 8px !important;
     color: #e2e8f0 !important;
@@ -3198,7 +3236,8 @@ body .ui-tooltip {
     text-align: center !important;
     white-space: normal !important;
     word-break: normal !important;
-    animation: premiumTooltipPop 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    will-change: transform, opacity !important;
+    animation: premiumTooltipPop 0.14s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
 .ui-tooltip-content {

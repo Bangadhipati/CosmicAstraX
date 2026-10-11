@@ -822,7 +822,11 @@
                 if (drawerCloseBtn) {
                     drawerCloseBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
+                        drawerCloseBtn.classList.add('closing');
                         closeInfoDrawer();
+                        setTimeout(() => {
+                            drawerCloseBtn.classList.remove('closing');
+                        }, 280);
                     });
                 }
 
