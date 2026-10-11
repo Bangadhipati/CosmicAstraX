@@ -484,13 +484,13 @@
             
             <!-- TOP NAVBAR -->
             <nav id="top-navbar" class="modern-nav">
-                <div class="nav-left" id="nav-brand">
+                <button class="nav-left nav-brand-btn" id="nav-brand" title="Return to CosmicAstraX Landing Page" aria-label="Return to CosmicAstraX Landing Page">
                     <img src="data/CosmicAstraX.png" alt="CosmicAstraX Logo" class="ca-logo">
                     <div class="nav-text">
                         <span class="main-text">CosmicAstraX</span>
                         <span class="sub-text">From Family of AstraGenX</span>
                     </div>
-                </div>
+                </button>
                 <div class="nav-right">
                     <div class="search-wrapper" id="nav-search-wrapper">
                         <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -734,7 +734,7 @@
                 const heroInfoBtn = document.getElementById('hero-info-btn');
                 const infoDrawerBackdrop = document.getElementById('info-drawer-backdrop');
                 const drawerCloseBtn = document.getElementById('drawer-close-btn');
-                const navBackToLandingBtn = document.getElementById('nav-back-to-landing-btn');
+                const navBrandBtn = document.getElementById('nav-brand') || document.getElementById('nav-back-to-landing-btn');
 
                 function openInfoDrawer() {
                     if (infoDrawerBackdrop) {
@@ -793,9 +793,9 @@
                     });
                 }
 
-                // Navbar Back Button: Re-opens the landing overlay
-                if (navBackToLandingBtn) {
-                    navBackToLandingBtn.addEventListener('click', (e) => {
+                // Navbar Brand Button (Logo + Text + Subtext): Re-opens / redirects to the landing overlay
+                if (navBrandBtn) {
+                    navBrandBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
                         showLandingPage(true);
                     });
