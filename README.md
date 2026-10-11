@@ -118,8 +118,14 @@ CosmicAstraX computes planetary positions using classical celestial mechanics:
 | **Time Controls (Bottom Bar)**| Play, pause, rewind, fast-forward, or scrub dates |
 | **Reset / Deselect** | Return camera to full system overview and restore default orbits |
 
+## 👥 Initial Team (2024)
+
+- **Initial Team Members**: **D. Bhowmick**, **S. Sabnam**, **I. Rahmani**, **V. Kumar**, **T. Gupta**
+- **Initiative**: **NASA Space Apps Challenge 2024** &bull; **Team AstraGenX**
+
 <div>
   <sub>Developed with curiosity for space exploration. Made for astronomers, students, and stargazers worldwide.</sub>
   <br />
   <sub>🚀 Live at <a href="https://cosmicastrax.netlify.app">cosmicastrax.netlify.app</a></sub>
 </div>
+

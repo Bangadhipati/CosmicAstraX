@@ -73,15 +73,7 @@
                         <span class="sub-text">From Family of AstraGenX</span>
                     </div>
                 </div>
-                <div class="nav-right">
-                    <button id="landing-info-icon-btn" class="nav-btn info-icon-btn" title="About CosmicAstraX" aria-label="About Project">
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="16" x2="12" y2="12"></line>
-                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                        </svg>
-                    </button>
-                </div>
+                <div class="nav-right"></div>
             </header>
 
             <!-- Hero Section: Perfectly proportioned to fit in 1 single viewport -->
@@ -373,6 +365,26 @@
                         <p class="info-card-text">
                             <strong>CosmicAstraX</strong> is an advanced, hardware-accelerated 3D Orrery and celestial mechanics simulator crafted by <strong>Team AstraGenX</strong> under the direction of <strong>Debarghya Bhowmick</strong>, initially created for the <strong>NASA Space Apps Challenge 2024</strong>.
                         </p>
+                        <table class="drawer-specs-table">
+                            <tbody>
+                                <tr>
+                                    <td class="table-key">Initial Team (2024)</td>
+                                    <td class="table-val">
+                                        <div class="team-members-list">
+                                            <span class="team-member-tag">D. Bhowmick</span>
+                                            <span class="team-member-tag">S. Sabnam</span>
+                                            <span class="team-member-tag">I. Rahmani</span>
+                                            <span class="team-member-tag">V. Kumar</span>
+                                            <span class="team-member-tag">T. Gupta</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table-key">Founding Event</td>
+                                    <td class="table-val">NASA Space Apps Challenge 2024 &bull; AstraGenX</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="info-section-card">
@@ -684,7 +696,10 @@
                     <p class="subtitle">Developed by Team AstraGenX</p>
                     <p class="credits">
                         Under the leadership of <b style="color: #00f3ff;">Debarghya Bhowmick</b><br>
-                        Initially for <b>Nasa Space Apps Challenge 2024</b>.
+                        Initially for <b>NASA Space Apps Challenge 2024</b><br>
+                        <span style="display: inline-block; margin-top: 6px; font-size: 0.8rem; color: #cbd5e1;">
+                            Initial Team (2024): <b>D. Bhowmick, S. Sabnam, I. Rahmani, V. Kumar, T. Gupta</b>
+                        </span>
                     </p>
                     <div class="modal-powered-by">
                         <div class="modal-powered-title">POWERED BY NASA - ISRO OPEN DATA</div>
@@ -717,7 +732,6 @@
                 const landingOverlay = document.getElementById('landing-overlay');
                 const heroStartBtn = document.getElementById('hero-start-btn');
                 const heroInfoBtn = document.getElementById('hero-info-btn');
-                const landingInfoIconBtn = document.getElementById('landing-info-icon-btn');
                 const infoDrawerBackdrop = document.getElementById('info-drawer-backdrop');
                 const drawerCloseBtn = document.getElementById('drawer-close-btn');
                 const navBackToLandingBtn = document.getElementById('nav-back-to-landing-btn');
@@ -804,12 +818,6 @@
                     });
                 }
 
-                if (landingInfoIconBtn) {
-                    landingInfoIconBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        openInfoDrawer();
-                    });
-                }
 
                 if (drawerCloseBtn) {
                     drawerCloseBtn.addEventListener('click', (e) => {

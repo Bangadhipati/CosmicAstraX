@@ -172,8 +172,7 @@ a:hover {
     color: #ff3377;
 }
 
-#info-btn,
-#landing-info-icon-btn {
+#info-btn {
     order: 3;
     width: 32px;
     height: 32px;
@@ -185,8 +184,7 @@ a:hover {
     color: #a5b4fc;
 }
 
-#info-btn:hover,
-#landing-info-icon-btn:hover {
+#info-btn:hover {
     background: transparent;
     border: none;
     color: #00f3ff;
@@ -2922,6 +2920,36 @@ body.calendar-open .date-input-container {
 .drawer-specs-table .table-val em {
     color: #e2e8f0;
     font-style: italic;
+}
+
+.team-members-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.team-member-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    background: rgba(0, 243, 255, 0.08);
+    border: 1px solid rgba(0, 243, 255, 0.25);
+    border-radius: 6px;
+    color: #e2e8f0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.team-member-tag:hover {
+    background: rgba(0, 243, 255, 0.2);
+    border-color: #00f3ff;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.35);
+    transform: translateY(-1px);
 }
 
 /* Responsive constraints to keep everything visible on small screens */
