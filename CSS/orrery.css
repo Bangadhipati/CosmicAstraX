@@ -2527,6 +2527,8 @@ body.calendar-open .date-input-container {
     width: 100%;
     overflow: hidden;
     position: relative;
+    padding: 10px 0;
+    margin: -10px 0;
     mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 1) 4%, rgba(0, 0, 0, 1) 96%, transparent 100%);
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 1) 4%, rgba(0, 0, 0, 1) 96%, transparent 100%);
 }
@@ -2547,6 +2549,8 @@ body.calendar-open .date-input-container {
     align-items: center;
     gap: 40px;
     padding-right: 40px;
+    padding-top: 6px;
+    padding-bottom: 6px;
     flex-shrink: 0;
 }
 
@@ -2565,14 +2569,15 @@ body.calendar-open .date-input-container {
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 3px 6px;
+    padding: 4px 6px;
     height: auto;
     background: transparent;
     border: none;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    transition: all 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+    transform-origin: center bottom;
+    transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.28s ease;
     cursor: default;
     user-select: none;
     flex-shrink: 0;
@@ -2582,7 +2587,7 @@ body.calendar-open .date-input-container {
     background: transparent;
     border: none;
     box-shadow: none;
-    transform: translateY(-3px) scale(1.08);
+    transform: translateY(-2px) scale(1.06);
 }
 
 .agency-logo-img {
