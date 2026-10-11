@@ -2005,5 +2005,107 @@ body.calendar-open .date-input-container {
     }
 }
 
+/* ==========================================================================
+   Ultra-Premium Autocomplete Search Recommendations Dropdown
+   ========================================================================== */
+.ui-autocomplete {
+    position: absolute !important;
+    z-index: 10001 !important;
+    background: rgba(10, 14, 24, 0.94) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border: 1px solid rgba(0, 243, 255, 0.35) !important;
+    border-radius: 16px !important;
+    padding: 8px !important;
+    margin-top: 8px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15) !important;
+    max-height: 280px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    list-style: none !important;
+    font-family: 'Outfit', sans-serif !important;
+    box-sizing: border-box !important;
+    min-width: 240px !important;
+}
+
+/* Custom Sleek Scrollbar for Autocomplete */
+.ui-autocomplete::-webkit-scrollbar {
+    width: 5px !important;
+}
+
+.ui-autocomplete::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.ui-autocomplete::-webkit-scrollbar-thumb {
+    background: rgba(0, 243, 255, 0.25) !important;
+    border-radius: 10px !important;
+}
+
+.ui-autocomplete::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 243, 255, 0.5) !important;
+}
+
+.ui-autocomplete .ui-menu-item {
+    margin: 3px 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.ui-autocomplete .ui-menu-item-wrapper,
+.ui-autocomplete .ui-menu-item .ui-corner-all {
+    display: flex !important;
+    align-items: center !important;
+    padding: 8px 12px 8px 30px !important;
+    border-radius: 10px !important;
+    color: #e2e8f0 !important;
+    font-size: 0.86rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    position: relative !important;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+    text-decoration: none !important;
+}
+
+/* Custom Sci-Fi Target Indicator Bullet */
+.ui-autocomplete .ui-menu-item-wrapper::before,
+.ui-autocomplete .ui-menu-item .ui-corner-all::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 12px !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: rgba(0, 243, 255, 0.4) !important;
+    box-shadow: 0 0 6px rgba(0, 243, 255, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Hover and Active Focus State */
+.ui-autocomplete .ui-menu-item-wrapper:hover,
+.ui-autocomplete .ui-menu-item-wrapper.ui-state-active,
+.ui-autocomplete .ui-menu-item-wrapper.ui-state-focus,
+.ui-autocomplete .ui-menu-item .ui-state-active,
+.ui-autocomplete .ui-menu-item .ui-state-focus {
+    color: #00f3ff !important;
+    background: rgba(0, 243, 255, 0.12) !important;
+    border-color: rgba(0, 243, 255, 0.4) !important;
+    box-shadow: 0 0 12px rgba(0, 243, 255, 0.2), inset 0 0 8px rgba(0, 243, 255, 0.08) !important;
+    transform: translateX(3px) !important;
+}
+
+.ui-autocomplete .ui-menu-item-wrapper:hover::before,
+.ui-autocomplete .ui-menu-item-wrapper.ui-state-active::before,
+.ui-autocomplete .ui-menu-item-wrapper.ui-state-focus::before,
+.ui-autocomplete .ui-menu-item .ui-state-active::before,
+.ui-autocomplete .ui-menu-item .ui-state-focus::before {
+    background: #00f3ff !important;
+    box-shadow: 0 0 10px #00f3ff !important;
+    transform: scale(1.3) !important;
+}
+
 
 
