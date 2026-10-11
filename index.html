@@ -96,9 +96,19 @@
                 </div>
             </nav>
 
-            <!-- LEFT PANEL (System Visibility) -->
+            <!-- LEFT PANEL (System Visibility & Filter) -->
             <aside id="left-panel" class="modern-panel">
-                <h3 class="panel-header">LAYERS</h3>
+                <div class="panel-header">
+                    <span class="header-title">FILTERS</span>
+                    <button id="toggle-layers-btn" class="toggle-layers-btn" title="Compress Filters" aria-label="Toggle Filters Panel">
+                        <svg class="layer-arrow-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div class="collapsed-tab" id="collapsed-tab">
+                    <span class="vertical-label">FILTERS</span>
+                </div>
                 <fieldset class="filter-group">
                     <label class="toggle-switch">
                         <div class="toggle-label-wrap">
@@ -354,6 +364,25 @@
                         }
                     }
                 });
+
+                // FILTERS Panel Collapse / Expand Toggle
+                const leftPanel = document.getElementById('left-panel');
+                const toggleLayersBtn = document.getElementById('toggle-layers-btn');
+                const collapsedTab = document.getElementById('collapsed-tab');
+
+                if (leftPanel && toggleLayersBtn) {
+                    toggleLayersBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        leftPanel.classList.toggle('collapsed');
+                    });
+                }
+
+                if (leftPanel && collapsedTab) {
+                    collapsedTab.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        leftPanel.classList.remove('collapsed');
+                    });
+                }
             });
         </script>
         
