@@ -104,14 +104,13 @@ export function clickTag(t) {
         ORR.scene.add(ORR.paths[ORR.state.clickedPlanet.path]);
     }
     $("#distToActive").remove();
-    ORR.state.lastClickedPlanet = ORR.state.clickedPlanet;
-    ORR.controls.minDistance = 0.1;
+    ORR.controls.minDistance = ORR.state.clickedPlanet.isSun ? 0.15 : 0.01;
     const tweenTo = new TWEEN.Tween(ORR.controls.target)
         .to({ x: ORR.state.clickedPlanet.celestialPos.x, y: ORR.state.clickedPlanet.celestialPos.y, z: ORR.state.clickedPlanet.celestialPos.z }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(function () { this.to({ x: ORR.state.clickedPlanet.celestialPos.x, y: ORR.state.clickedPlanet.celestialPos.y, z: ORR.state.clickedPlanet.celestialPos.z }) })
         .start();
 
-    const viewDistance = Math.max(0.01, ORR.state.clickedPlanet.exagRadius * 2);
+    const viewDistance = ORR.state.clickedPlanet.isSun ? 0.35 : Math.max(0.01, ORR.state.clickedPlanet.exagRadius * 2);
     const startCamPos = ORR.camera.position.clone();
     const startTarget = ORR.controls.target.clone();
     let dir = startCamPos.sub(startTarget).normalize();
@@ -248,7 +247,7 @@ function updateScale() {
 
 function zoomIn() {
     if (ORR.state.clickedPlanet.isSun) {
-        ORR.controls.minDistance = 0.05;
+        ORR.controls.minDistance = 0.15;
     } else {
         ORR.controls.minDistance = ORR.state.clickedPlanet.radius / ORR.AU * 100000;
     }
