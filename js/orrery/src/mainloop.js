@@ -32,6 +32,9 @@ export function animate(time) {
     ORR.times.rate = ORR.rates[ORR.times.speed] * (ORR.fps / clockElapsed);
     ORR.times.ephTime += ORR.times.rate;
     ORR.sun.rotateOnAxis(new THREE.Vector3(0, 1, 0), ORR.sun.thetaDot * ORR.times.rate);
+    if (ORR.sun && ORR.sun.material && ORR.sun.material.userData && ORR.sun.material.userData.time) {
+        ORR.sun.material.userData.time.value += 0.016;
+    }
     let readout = ORR.EphTimeReadout(ORR.times.ephTime).a;
     readout += (ORR.times.speed > (ORR.times.pauseRate - 4) && ORR.times.speed < (ORR.times.pauseRate + 4)) ? ORR.EphTimeReadout(ORR.times.ephTime).b : "";
     readout += (ORR.times.speed > (ORR.times.pauseRate - 2) && ORR.times.speed < (ORR.times.pauseRate + 2)) ? ORR.EphTimeReadout(ORR.times.ephTime).c : "";

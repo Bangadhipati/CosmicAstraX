@@ -139,9 +139,9 @@ bloomLayer.set( BLOOM_SCENE );
 
 export const renderScene = new RenderPass( scene, camera );
 export const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-bloomPass.threshold = 0.15;
-bloomPass.strength = 3;
-bloomPass.radius = 0.5;
+bloomPass.threshold = 0.2;
+bloomPass.strength = 1.0;
+bloomPass.radius = 0.4;
 
 export const bloomComposer = new EffectComposer( renderer );
 bloomComposer.renderToScreen = false;
@@ -185,10 +185,12 @@ function createSunGlow() {
     canvas.height = 512;
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(0.15, 'rgba(255, 240, 150, 0.8)');
-    gradient.addColorStop(0.3, 'rgba(255, 150, 50, 0.5)');
-    gradient.addColorStop(0.5, 'rgba(200, 50, 0, 0.2)');
+    // Keep core transparent so fiery solar surface/core texture is 100% visible
+    gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+    gradient.addColorStop(0.48, 'rgba(0, 0, 0, 0)');
+    gradient.addColorStop(0.55, 'rgba(255, 140, 20, 0.28)');
+    gradient.addColorStop(0.65, 'rgba(255, 85, 10, 0.16)');
+    gradient.addColorStop(0.80, 'rgba(200, 45, 0, 0.06)');
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 512, 512);
@@ -199,23 +201,97 @@ function createSunGlow() {
         blending: THREE.AdditiveBlending,
         transparent: true,
         depthWrite: false,
-        opacity: 0.95
+        opacity: 0.75
     });
     
     const sprite = new THREE.Sprite(material);
-    sprite.scale.set(0.6, 0.6, 1);
+    sprite.scale.set(0.36, 0.36, 1);
+    sprite.glow = true; // Soft outer corona participates gently in bloom
     return sprite;
 }
 
 const sunGeometry = new THREE.SphereGeometry( 0.1, 128, 128 );
+const sunTexture = loader.load('data/1k_sun.jpg');
+sunTexture.colorSpace = THREE.SRGBColorSpace;
+
 const sunMaterial = new THREE.MeshBasicMaterial({ 
-    map: loader.load('data/1k_sun.jpg'),
-    color: 0xffffff
+    map: sunTexture
 });
+sunMaterial.userData.time = { value: 0.0 };
+
+sunMaterial.onBeforeCompile = (shader) => {
+    shader.uniforms.uTime = sunMaterial.userData.time;
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <common>',
+        `#include <common>
+        varying vec3 vNormalWorld;
+        varying vec3 vWorldPosition;
+        `
+    );
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <worldpos_vertex>',
+        `#include <worldpos_vertex>
+        vNormalWorld = normalize(mat3(modelMatrix) * normal);
+        vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+        `
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <common>',
+        `#include <common>
+        uniform float uTime;
+        varying vec3 vNormalWorld;
+        varying vec3 vWorldPosition;
+        `
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <map_fragment>',
+        `
+        #ifdef USE_MAP
+            vec2 uvBase = vMapUv;
+            float t = uTime * 0.4;
+            // Fiery convection perturbation & boiling turbulence
+            float warp1 = sin(uvBase.y * 28.0 + t * 1.4) * cos(uvBase.x * 24.0 + t * 1.1) * 0.003;
+            float warp2 = cos(uvBase.x * 32.0 - t * 1.6) * sin(uvBase.y * 28.0 + t * 1.2) * 0.003;
+            vec2 fireUv = uvBase + vec2(warp1, warp2);
+
+            vec4 sampledColor = texture2D( map, fireUv );
+            vec3 rawRgb = sampledColor.rgb;
+
+            // View direction & solar limb darkening
+            vec3 viewDir = normalize( cameraPosition - vWorldPosition );
+            float cosTheta = clamp( dot( normalize( vNormalWorld ), viewDir ), 0.0, 1.0 );
+            
+            // Solar limb darkening curve (makes core deep and clear)
+            float limbDarkening = 0.50 + 0.50 * pow( cosTheta, 0.65 );
+
+            // Fiery plasma color grading
+            // Valleys/sunspots: rich dark amber / deep crimson red
+            // Midtones: burning fiery orange / convective gold
+            // Flare peaks: brilliant golden-yellow plasma
+            vec3 fireRgb;
+            fireRgb.r = pow( rawRgb.r, 0.95 ) * 1.04;
+            fireRgb.g = pow( rawRgb.g, 1.08 ) * 0.94;
+            fireRgb.b = pow( rawRgb.b, 1.35 ) * 0.55;
+
+            // Subtle plasma simmer
+            float simmer = sin( fireUv.x * 55.0 + t * 2.2 ) * cos( fireUv.y * 55.0 + t * 2.8 ) * 0.035;
+            fireRgb = clamp( fireRgb + simmer * rawRgb.r, 0.0, 1.0 );
+
+            // Delicate chromospheric rim glow right at the limb
+            float rim = pow( 1.0 - cosTheta, 3.2 );
+            vec3 rimColor = vec3( 1.0, 0.45, 0.08 ) * rim * 0.8;
+
+            vec3 finalFire = fireRgb * limbDarkening + rimColor;
+            diffuseColor = vec4( finalFire, 1.0 );
+        #endif
+        `
+    );
+};
+
 export const sun = new THREE.Mesh( sunGeometry, sunMaterial );
 sun.add(createSunGlow());
 sun.name = "Sol";
-sun.glow = true;
+sun.glow = false; // Core sphere does NOT bloom to keep fiery core details crisp and visible
 ORR.reAxis(sun, 63.87 * toRad, 286.13 * toRad);
 sun.thetaDot = 360 * daysPerCent / -25.05 * toRad; // sun rotation rotate
 scene.add( sun );
