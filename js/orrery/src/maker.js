@@ -58,18 +58,23 @@ export function makeBody (sysId, radius, ringRad) { // make bodies
             shader.fragmentShader = shader.fragmentShader.replace(
                 '#include <map_fragment>',
                 `#include <map_fragment>
-                vec4 nightTexel = texture2D(nightTexture, vCustomUv);
                 float sunCos = dot(normalize(vNormalWorld), sunDirection);
-                float dayMix = smoothstep(-0.15, 0.15, sunCos);
+                // Cool black shadow at the junction between day and night:
+                // Full day texture in sunlight (> 0.08), fading cleanly to black shadow at the junction (<= 0.0)
+                float dayFactor = smoothstep(0.0, 0.08, sunCos);
+                diffuseColor.rgb *= dayFactor;`
+            );
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <emissivemap_fragment>',
+                `#include <emissivemap_fragment>
+                vec4 nightTexel = texture2D(nightTexture, vCustomUv);
                 
-                // Twilight golden band along the terminator
-                float twilight = smoothstep(-0.18, 0.0, sunCos) * (1.0 - smoothstep(0.0, 0.20, sunCos));
-                vec3 twilightColor = vec3(1.0, 0.48, 0.16) * (twilight * 0.45);
+                // Night shadow transition: smooth black shadow at the junction (sunCos = 0.0)
+                // reaching full night texture (sunCos <= -0.06)
+                float nightFactor = smoothstep(0.0, -0.06, sunCos);
                 
-                // Night side: night lights + subtle ambient land
-                vec3 nightColor = nightTexel.rgb * 2.8 + diffuseColor.rgb * 0.04;
-                
-                diffuseColor.rgb = mix(nightColor, diffuseColor.rgb, dayMix) + twilightColor;`
+                // Exactly as in original 1k_earth_night.jpg image without extra light or darkness
+                totalEmissiveRadiance += nightTexel.rgb * nightFactor;`
             );
         };
     } else {
@@ -101,32 +106,70 @@ export function makeBody (sysId, radius, ringRad) { // make bodies
         if (["Jupiter", "Saturn"].includes(body.name)) glowColor = new THREE.Color(0xaa9977);
         if (["Uranus", "Neptune"].includes(body.name)) glowColor = new THREE.Color(0x44aaff);
 
-        const atmoMaterial = new THREE.ShaderMaterial({
-            uniforms: {
-                glowColor: { type: "c", value: glowColor }
-            },
-            vertexShader: `
-                varying float intensity;
-                void main() {
-                    vec3 vNormal = normalize( normalMatrix * normal );
-                    float dotP = dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );
-                    intensity = pow( 0.65 - dotP, 4.0 );
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-                }
-            `,
-            fragmentShader: `
-                uniform vec3 glowColor;
-                varying float intensity;
-                void main() {
-                    vec3 glow = glowColor * intensity;
-                    gl_FragColor = vec4( glow, 1.0 );
-                }
-            `,
-            side: THREE.FrontSide,
-            blending: THREE.AdditiveBlending,
-            transparent: true,
-            depthWrite: false
-        });
+        let atmoMaterial;
+        if (body.name === "Earth") {
+            atmoMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    glowColor: { type: "c", value: glowColor },
+                    sunDirection: material.userData.sunDirection
+                },
+                vertexShader: `
+                    varying float intensity;
+                    varying vec3 vNormalWorld;
+                    void main() {
+                        vNormalWorld = normalize( mat3( modelMatrix ) * normal );
+                        vec3 vNormal = normalize( normalMatrix * normal );
+                        float dotP = dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );
+                        intensity = pow( 0.65 - dotP, 4.0 );
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 glowColor;
+                    uniform vec3 sunDirection;
+                    varying float intensity;
+                    varying vec3 vNormalWorld;
+                    void main() {
+                        // Atmosphere illuminates exclusively on the sunlit day side
+                        float sunCos = dot( normalize( vNormalWorld ), sunDirection );
+                        float dayAtmo = smoothstep( 0.0, 0.15, sunCos );
+                        vec3 glow = glowColor * intensity * dayAtmo;
+                        gl_FragColor = vec4( glow, intensity * dayAtmo );
+                    }
+                `,
+                side: THREE.FrontSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                depthWrite: false
+            });
+        } else {
+            atmoMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    glowColor: { type: "c", value: glowColor }
+                },
+                vertexShader: `
+                    varying float intensity;
+                    void main() {
+                        vec3 vNormal = normalize( normalMatrix * normal );
+                        float dotP = dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );
+                        intensity = pow( 0.65 - dotP, 4.0 );
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 glowColor;
+                    varying float intensity;
+                    void main() {
+                        vec3 glow = glowColor * intensity;
+                        gl_FragColor = vec4( glow, 1.0 );
+                    }
+                `,
+                side: THREE.FrontSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                depthWrite: false
+            });
+        }
 
         const atmoGeometry = (body.name === "Earth") ? new THREE.SphereGeometry( planetRadius * 1.025, 64, 64 ) : new THREE.IcosahedronGeometry( planetRadius * 1.06, 5 );
         const atmosphere = new THREE.Mesh( atmoGeometry, atmoMaterial );
