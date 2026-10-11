@@ -329,7 +329,7 @@ $(function () {
     // Removed accordion initialization as the UI is now a distributed layout
     // Global ultra-premium tooltip with pure GPU-accelerated CSS animations
     $(document).tooltip({
-        items: "[title]",
+        items: "[title]:not(#autocomplete)",
         show: false,
         hide: false,
         track: false,
