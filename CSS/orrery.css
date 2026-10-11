@@ -85,6 +85,8 @@ a:hover {
     display: flex;
     align-items: center;
     gap: 12px;
+    transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+    white-space: nowrap;
 }
 
 .ca-logo {
@@ -130,105 +132,74 @@ a:hover {
     opacity: 0.9;
 }
 
-.modern-nav .nav-center {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.modern-nav .search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 450px;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.modern-nav .search-wrapper:hover {
-    transform: scale(1.02);
-}
-
-.search-icon {
-    position: absolute;
-    left: 18px;
-    color: #6a7ba2;
-    transition: color 0.3s ease;
-}
-
-.modern-nav .search-wrapper:focus-within .search-icon {
-    color: #00f3ff;
-}
-
-.modern-nav .search-wrapper input {
-    width: 100%;
-    background: rgba(15, 20, 30, 0.5);
-    border: 1px solid rgba(165, 180, 252, 0.2);
-    color: #fff;
-    padding: 12px 20px 12px 50px;
-    border-radius: 30px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    outline: none;
-    transition: all 0.3s ease;
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-}
-
-.modern-nav .search-wrapper input::placeholder {
-    color: #6a7ba2;
-}
-
-.modern-nav .search-wrapper input:focus {
-    border-color: #00f3ff;
-    background: rgba(10, 15, 25, 0.8);
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2), inset 0 2px 10px rgba(0,0,0,0.5);
-}
-
 .modern-nav .nav-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     position: relative;
     z-index: 50;
 }
 
 .search-toggle-btn {
     display: flex;
-}
-
-.search-close-btn {
-    position: absolute;
-    right: 10px;
-    background: transparent;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 50%;
-    display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    z-index: 3;
+    order: 2;
+    position: relative;
+    width: 32px;
+    height: 32px;
 }
 
-.search-close-btn:hover {
+.search-toggle-btn .icon-search,
+.search-toggle-btn .icon-close {
+    position: absolute;
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), 
+                opacity 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.search-toggle-btn .icon-search {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.search-toggle-btn .icon-close {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+    color: #ff3377;
+}
+
+#info-btn {
+    order: 3;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 0;
+    color: #a5b4fc;
+}
+
+#info-btn:hover {
+    background: transparent;
+    border: none;
     color: #00f3ff;
-    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.7));
+    transform: scale(1.12);
 }
 
 .nav-btn {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(165, 180, 252, 0.3);
     color: #a5b4fc;
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -239,8 +210,8 @@ a:hover {
     background: rgba(0, 243, 255, 0.15);
     border-color: #00f3ff;
     color: #00f3ff;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-    transform: scale(1.08);
+    box-shadow: 0 0 16px rgba(0, 243, 255, 0.4);
+    transform: scale(1.06);
 }
 
 /* Modal Powered By Section (Clean, Normal Typography) */
@@ -268,82 +239,107 @@ a:hover {
     letter-spacing: 1px;
 }
 
-/* ==========================================================================
-   Universal Expandable Search Bar (Expands Left on Click)
-   ========================================================================== */
-.modern-nav .nav-center {
+.search-close-btn {
     position: absolute;
-    right: 95px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    pointer-events: none;
-    z-index: 40;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    padding: 0;
 }
 
+.search-close-btn:hover {
+    color: #ff3377;
+    background: rgba(255, 0, 85, 0.15);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.modern-nav.search-active .search-wrapper input {
+    padding-right: 36px;
+}
+
+/* ==========================================================================
+   Expandable Search Bar (Expands smoothly to the left, anchored to the right)
+   ========================================================================== */
+/* Base search wrapper: absolutely positioned within .nav-right, anchored beside #info-btn */
 .modern-nav .search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+    position: absolute;
+    right: 42px; /* Positioned right next to #info-btn */
+    top: 50%;
+    transform: translateY(-50%);
     width: 0;
     opacity: 0;
-    transform: scaleX(0.7) translateX(20px);
-    transform-origin: right center;
-    transition: width 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-radius: 24px;
+    transition: width 0.35s cubic-bezier(0.2, 0.9, 0.3, 1),
+                opacity 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+    z-index: 20;
 }
 
 .modern-nav .search-wrapper input {
     width: 100%;
-    background: rgba(12, 16, 26, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(12, 16, 26, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(0, 243, 255, 0.35);
     color: #fff;
-    padding: 9px 36px 9px 42px;
+    padding: 7px 36px 7px 36px;
     border-radius: 24px;
     font-family: 'Outfit', sans-serif;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     font-weight: 400;
     outline: none;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 243, 255, 0.15), inset 0 2px 6px rgba(0,0,0,0.4);
+    box-shadow: 0 0 16px rgba(0, 243, 255, 0.15);
     box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .modern-nav .search-wrapper input:focus {
     border-color: #00f3ff;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 243, 255, 0.35), inset 0 2px 6px rgba(0,0,0,0.4);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.35);
 }
 
 .modern-nav .search-wrapper input::placeholder {
     color: #64748b;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
 }
 
 .search-icon {
     position: absolute;
-    left: 14px;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     color: #00f3ff;
     z-index: 2;
     pointer-events: none;
 }
 
-/* Active State: Desktop & Large Screens (Compact ~320px width on right) */
+/* Active State: Desktop (Expands leftwards smoothly) */
 .modern-nav.search-active .search-wrapper {
-    width: 330px;
+    width: 320px;
     opacity: 1;
-    transform: scaleX(1) translateX(0);
     pointer-events: auto;
 }
 
+/* Hide search toggle button smoothly when search is active, keeping #info-btn fixed */
 .modern-nav.search-active #search-toggle-btn {
-    background: rgba(0, 243, 255, 0.2);
-    border-color: #00f3ff;
-    color: #00f3ff;
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* ==========================================================================
@@ -355,30 +351,20 @@ a:hover {
     }
 
     .modern-nav .nav-left {
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition: opacity 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), 
+                    transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
         z-index: 10;
     }
 
-    .modern-nav .nav-center {
-        right: 0;
-        left: 0;
-        padding: 10px 18px;
-    }
-
-    /* On mobile/smaller screens: expands full width and brand fades out */
+    /* On mobile/smaller screens: search expands from right side across to the left padding */
     .modern-nav.search-active .nav-left {
         opacity: 0;
-        transform: translateX(-20px);
-        pointer-events: none;
-    }
-
-    .modern-nav.search-active .nav-right {
-        opacity: 0;
+        transform: translateX(-15px);
         pointer-events: none;
     }
 
     .modern-nav.search-active .search-wrapper {
-        width: 100%;
+        width: calc(100vw - 78px);
     }
 }
 
@@ -405,8 +391,16 @@ a:hover {
     }
 
     .nav-btn {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .modern-nav .search-wrapper {
+        right: 38px; /* Positioned beside 30px info-btn + 8px gap */
+    }
+
+    .modern-nav.search-active .search-wrapper {
+        width: calc(100vw - 66px);
     }
 }
 
