@@ -87,6 +87,20 @@ a:hover {
     gap: 18px;
 }
 
+.ca-logo {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.45));
+    border-radius: 8px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.ca-logo:hover {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 16px rgba(0, 243, 255, 0.75));
+}
+
 .ca-badge {
     background: linear-gradient(135deg, #00f3ff 0%, #0066ff 100%);
     color: #ffffff;
