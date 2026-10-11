@@ -22,6 +22,56 @@ export function makeBody (sysId, radius, ringRad) { // make bodies
             emissiveMap: ORR.loader.load('data/' + body.texture),
             emissiveIntensity: 4.0
         });
+    } else if (body.name === "Earth") {
+        // Fully opaque, solid Earth with native logarithmic depth buffer + day/night/lights shader
+        const dayTex = ORR.loader.load('data/' + body.texture);
+        const nightTex = ORR.loader.load('data/1k_earth_night.jpg');
+        material = new THREE.MeshStandardMaterial({
+            map: dayTex,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+        material.userData.sunDirection = { value: new THREE.Vector3(1, 0, 0) };
+        material.onBeforeCompile = (shader) => {
+            shader.uniforms.nightTexture = { value: nightTex };
+            shader.uniforms.sunDirection = material.userData.sunDirection;
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <common>',
+                `#include <common>
+                varying vec3 vNormalWorld;
+                varying vec2 vCustomUv;`
+            );
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <beginnormal_vertex>',
+                `#include <beginnormal_vertex>
+                vNormalWorld = normalize(mat3(modelMatrix) * objectNormal);
+                vCustomUv = uv;`
+            );
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <common>',
+                `#include <common>
+                uniform sampler2D nightTexture;
+                uniform vec3 sunDirection;
+                varying vec3 vNormalWorld;
+                varying vec2 vCustomUv;`
+            );
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <map_fragment>',
+                `#include <map_fragment>
+                vec4 nightTexel = texture2D(nightTexture, vCustomUv);
+                float sunCos = dot(normalize(vNormalWorld), sunDirection);
+                float dayMix = smoothstep(-0.15, 0.15, sunCos);
+                
+                // Twilight golden band along the terminator
+                float twilight = smoothstep(-0.18, 0.0, sunCos) * (1.0 - smoothstep(0.0, 0.20, sunCos));
+                vec3 twilightColor = vec3(1.0, 0.48, 0.16) * (twilight * 0.45);
+                
+                // Night side: night lights + subtle ambient land
+                vec3 nightColor = nightTexel.rgb * 2.8 + diffuseColor.rgb * 0.04;
+                
+                diffuseColor.rgb = mix(nightColor, diffuseColor.rgb, dayMix) + twilightColor;`
+            );
+        };
     } else {
         material.roughness = 0.7;
         material.metalness = 0.1;
@@ -31,8 +81,8 @@ export function makeBody (sysId, radius, ringRad) { // make bodies
     }
     const planetRadius = radius;
     let geometry;
-    if (body.isSun) {
-        // Use a perfectly round sphere for the sun
+    if (body.isSun || body.name === "Earth") {
+        // High-precision smooth sphere for Sun and Earth
         geometry = new THREE.SphereGeometry(planetRadius, 64, 64);
     } else {
         // Use optimized icosahedron for other planets
@@ -45,7 +95,7 @@ export function makeBody (sysId, radius, ringRad) { // make bodies
 
     // Add Atmosphere Glow
     if (["Earth", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Titan"].includes(body.name)) {
-        let glowColor = new THREE.Color(0x4488ff);
+        let glowColor = (body.name === "Earth") ? new THREE.Color(0x3388ff) : new THREE.Color(0x4488ff);
         if (body.name === "Venus") glowColor = new THREE.Color(0xffcc88);
         if (body.name === "Mars") glowColor = new THREE.Color(0xff6644);
         if (["Jupiter", "Saturn"].includes(body.name)) glowColor = new THREE.Color(0xaa9977);
@@ -78,7 +128,7 @@ export function makeBody (sysId, radius, ringRad) { // make bodies
             depthWrite: false
         });
 
-        const atmoGeometry = new THREE.IcosahedronGeometry( planetRadius * 1.06, 5 );
+        const atmoGeometry = (body.name === "Earth") ? new THREE.SphereGeometry( planetRadius * 1.025, 64, 64 ) : new THREE.IcosahedronGeometry( planetRadius * 1.06, 5 );
         const atmosphere = new THREE.Mesh( atmoGeometry, atmoMaterial );
         sphere.add(atmosphere);
     }

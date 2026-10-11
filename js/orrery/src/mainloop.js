@@ -59,12 +59,19 @@ export function animate(time) {
         body.position.z = ORR.system[i].celestialPos.z;
         if (i === ORR.specialID.earth) {
             body.quaternion.copy(body.userData.tiltQuaternion);
-            const t = ORR.MJDtoUnix(ORR.EphTimeToMJD(ORR.times.ephTime));
-            // Standard astronomical GMST formula: 280.4606 + 360.985647 * d (where d is continuous days since J2000)
-            const gmst = (280.46061837 + 360.98564736629 * ORR.times.ephTime) % 360;
+            // Continuous days since J2000 epoch (ORR.times.ephTime is in centuries)
+            const d = ORR.times.ephTime * ORR.daysPerCent;
+            // Greenwich Mean Sidereal Time in degrees (West-to-East prograde rotation)
+            const gmst = (280.46061837 + 360.98564736629 * d) % 360;
 
-            // Rotate by GMST + 180 because the 1k_earth.jpg texture is centered on the Pacific (180 deg) instead of Greenwich.
-            body.rotateOnAxis(new THREE.Vector3(0, 1, 0), (gmst + 180) * ORR.toRad);
+            // Rotate by GMST around polar axis +Y (counter-clockwise viewed from North Pole)
+            body.rotateOnAxis(new THREE.Vector3(0, 1, 0), gmst * ORR.toRad);
+
+            // Update Sun direction for realistic day/night terminator shading
+            if (body.material && body.material.userData && body.material.userData.sunDirection) {
+                const sunDir = new THREE.Vector3(0, 0, 0).sub(body.position).normalize();
+                body.material.userData.sunDirection.value.copy(sunDir);
+            }
         } else {
             body.rotateOnAxis(new THREE.Vector3(0, 1, 0), ORR.system[i].thetaDot * ORR.times.rate);
         }
