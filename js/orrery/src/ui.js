@@ -85,8 +85,9 @@ export function clickTag(t) {
     $("#minimized-panel").hide();
     ORR.state.clickedLabel = $('#' + t);
     ORR.state.clickedLabel.addClass("active").show();
-    if ($.isEmptyObject(ORR.state.lastClickedPlanet) == false) {
-        ORR.paths[ORR.state.clickedPlanet.path].material = ORR.pathMaterials[Math.min(ORR.state.lastClickedPlanet.type, 3)];
+    if ($.isEmptyObject(ORR.state.clickedPlanet) == false && ORR.paths[ORR.state.clickedPlanet.path]) {
+        ORR.paths[ORR.state.clickedPlanet.path].material = ORR.pathMaterials[Math.min(ORR.state.clickedPlanet.type, 3)];
+        ORR.state.lastClickedPlanet = ORR.state.clickedPlanet;
     }
     // Dim all other orbits
     ORR.setPathMaterials(ORR.state.orbitOpacity * 0.15);
@@ -226,10 +227,14 @@ export function closeTag(t) {
     ORR.state.clickedLabel = "";
     // Restore orbit opacity
     ORR.setPathMaterials(ORR.state.orbitOpacity);
-    ORR.paths[ORR.state.clickedPlanet.path].material = ORR.pathMaterials[Math.min(ORR.state.clickedPlanet.type, 3)];
-    if (ORR.state.following) {
-        zoomOut(ORR.state.lastClickedPlanet.exagRadius / 2000);
+    if ($.isEmptyObject(ORR.state.clickedPlanet) == false && ORR.paths[ORR.state.clickedPlanet.path]) {
+        ORR.paths[ORR.state.clickedPlanet.path].material = ORR.pathMaterials[Math.min(ORR.state.clickedPlanet.type, 3)];
     }
+    if (ORR.state.following) {
+        zoomOut((ORR.state.clickedPlanet.exagRadius || ORR.state.lastClickedPlanet.exagRadius) / 2000);
+    }
+    ORR.state.lastClickedPlanet = ORR.state.clickedPlanet;
+    ORR.state.clickedPlanet = {};
     ORR.state.following = false;
     ORR.controls.maxDistance = ORR.initMaxDistance;
     const tweenMin = new TWEEN.Tween(ORR.controls).to({ minDistance: 1 }, 1000).easing(TWEEN.Easing.Quadratic.InOut).start();
