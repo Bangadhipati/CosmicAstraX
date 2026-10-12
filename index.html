@@ -341,19 +341,19 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Floating Premium Space Agency Badge -->
-                <div id="agency-hover-badge" class="agency-hover-badge" aria-hidden="true">
-                    <div class="badge-inner">
-                        <span class="badge-glow-dot"></span>
-                        <span class="badge-agency-abbr">ISRO</span>
-                        <span class="badge-divider"></span>
-                        <span class="badge-agency-fullname">Indian Space Research Organisation</span>
-                        <span class="badge-agency-country">India</span>
-                    </div>
-                    <div class="badge-arrow"></div>
-                </div>
             </footer>
+
+            <!-- Floating Premium Space Agency Badge (Direct Child of landing-overlay) -->
+            <div id="agency-hover-badge" class="agency-hover-badge" aria-hidden="true">
+                <div class="badge-inner">
+                    <span class="badge-glow-dot"></span>
+                    <span class="badge-agency-abbr">ISRO</span>
+                    <span class="badge-divider"></span>
+                    <span class="badge-agency-fullname">Indian Space Research Organisation</span>
+                    <span class="badge-agency-country">India</span>
+                </div>
+                <div class="badge-arrow"></div>
+            </div>
         </div>
 
         <!-- ==========================================================================
@@ -975,9 +975,11 @@
                     const countryEl = badge.querySelector('.badge-agency-country');
                     const arrowEl = badge.querySelector('.badge-arrow');
                     const pills = document.querySelectorAll('.agency-badge-pill');
+                    const marqueeTrack = document.querySelector('.marquee-track');
 
                     let currentPill = null;
                     let hideTimeout = null;
+                    let isTouch = false;
 
                     function positionBadge(pill) {
                         const rect = pill.getBoundingClientRect();
@@ -1023,6 +1025,10 @@
                         if (fullnameEl) fullnameEl.textContent = fullname;
                         if (countryEl) countryEl.textContent = country;
 
+                        if (marqueeTrack) {
+                            marqueeTrack.style.animationPlayState = 'paused';
+                        }
+
                         const wasVisible = badge.classList.contains('visible');
                         if (!wasVisible) {
                             badge.classList.add('no-transition');
@@ -1043,15 +1049,18 @@
                         hideTimeout = setTimeout(() => {
                             badge.classList.remove('visible');
                             currentPill = null;
-                        }, 80);
+                            if (marqueeTrack) {
+                                marqueeTrack.style.animationPlayState = 'running';
+                            }
+                        }, 120);
                     }
 
                     pills.forEach(pill => {
                         pill.addEventListener('mouseenter', function() {
-                            showBadge(pill);
+                            if (!isTouch) showBadge(pill);
                         });
                         pill.addEventListener('mouseleave', function() {
-                            hideBadge();
+                            if (!isTouch) hideBadge();
                         });
                         pill.addEventListener('focus', function() {
                             showBadge(pill);
@@ -1059,17 +1068,32 @@
                         pill.addEventListener('blur', function() {
                             hideBadge();
                         });
-                        pill.addEventListener('touchstart', function() {
+                        pill.addEventListener('touchstart', function(e) {
+                            isTouch = true;
+                            if (hideTimeout) clearTimeout(hideTimeout);
                             showBadge(pill);
                         }, { passive: true });
+                        pill.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            isTouch = true;
+                            if (hideTimeout) clearTimeout(hideTimeout);
+                            showBadge(pill);
+                        });
                     });
 
                     document.addEventListener('touchstart', function(e) {
                         if (!e.target.closest('.agency-badge-pill') && !e.target.closest('#agency-hover-badge')) {
-                            badge.classList.remove('visible');
-                            currentPill = null;
+                            hideBadge();
+                            setTimeout(() => { isTouch = false; }, 300);
                         }
                     }, { passive: true });
+
+                    document.addEventListener('click', function(e) {
+                        if (!e.target.closest('.agency-badge-pill') && !e.target.closest('#agency-hover-badge')) {
+                            hideBadge();
+                            setTimeout(() => { isTouch = false; }, 300);
+                        }
+                    });
 
                     window.addEventListener('resize', function() {
                         if (currentPill && badge.classList.contains('visible')) {

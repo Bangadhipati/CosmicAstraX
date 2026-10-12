@@ -2183,12 +2183,15 @@ body.calendar-open .date-input-container {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     z-index: 99999;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #04060c;
-    overflow: hidden;
+    background: #000000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.3, 1), visibility 0.6s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
     box-sizing: border-box;
 }
@@ -2202,25 +2205,26 @@ body.calendar-open .date-input-container {
 
 /* Dynamic Celestial Background with Pure Black Shadow on Left */
 .landing-bg-layer {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.82) 35%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0.1) 85%, transparent 100%),
-                      linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.7) 100%),
-                      url('../data/cosmicastraxheroimage.png');
+    background-image: 
+        linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.82) 38%, rgba(0, 0, 0, 0.45) 65%, rgba(0, 0, 0, 0.1) 88%, transparent 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.75) 100%),
+        url('../data/cosmicastraxheroimage.png');
     background-size: cover;
-    background-position: center right;
+    background-position: 68% center;
     background-repeat: no-repeat;
     z-index: 1;
     transform: scale(1.01);
-    transition: transform 1.2s ease-out;
+    transition: transform 1.2s ease-out, background-position 0.4s ease;
 }
 
 /* Subtle Ambient Depth Layer */
 .landing-ambient-dust {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
     pointer-events: none;
@@ -2241,11 +2245,11 @@ body.calendar-open .date-input-container {
 .landing-hero {
     position: relative;
     z-index: 10;
-    flex: 1;
+    flex: 1 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px 60px;
+    padding: clamp(16px, 3.5vh, 36px) clamp(18px, 5vw, 64px);
     box-sizing: border-box;
     min-height: 0;
 }
@@ -2271,17 +2275,20 @@ body.calendar-open .date-input-container {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 5px 16px;
-    border-radius: 20px;
+    padding: 5px 15px;
+    border-radius: 9999px;
     background: rgba(0, 243, 255, 0.08);
     border: 1px solid rgba(0, 243, 255, 0.35);
     color: #00f3ff;
-    font-size: 0.74rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.66rem, 1vw, 0.74rem);
     font-weight: 600;
-    letter-spacing: 1.5px;
+    letter-spacing: clamp(0.8px, 0.15vw, 1.4px);
     text-transform: uppercase;
-    margin-bottom: 14px;
+    margin-bottom: clamp(10px, 1.8vh, 16px);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .hero-badge-pulse {
@@ -2300,14 +2307,16 @@ body.calendar-open .date-input-container {
 
 /* Attractive Title */
 .hero-title {
-    margin: 0 0 14px 0;
+    margin: 0 0 clamp(10px, 1.6vh, 16px) 0;
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(2rem, 4vw, 3.3rem);
+    font-size: clamp(1.75rem, 3.4vw + 0.4rem, 3.25rem);
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.5px;
     color: #ffffff;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
 .hero-title .title-gradient {
@@ -2319,11 +2328,11 @@ body.calendar-open .date-input-container {
 
 /* Short descriptive text */
 .hero-subtitle {
-    margin: 0 0 26px 0;
+    margin: 0 0 clamp(16px, 2.6vh, 28px) 0;
     max-width: 600px;
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(0.9rem, 1.25vw, 1.05rem);
-    line-height: 1.6;
+    font-size: clamp(0.84rem, 0.95vw + 0.35rem, 1.05rem);
+    line-height: clamp(1.45, 1.3 + 0.25vw, 1.6);
     color: #cbd5e1;
     font-weight: 400;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
@@ -2339,7 +2348,8 @@ body.calendar-open .date-input-container {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: clamp(10px, 1.5vw, 16px);
     width: 100%;
 }
 
@@ -2348,10 +2358,10 @@ body.calendar-open .date-input-container {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 12px 28px;
+    padding: clamp(11px, 1.3vh + 4px, 13px) clamp(20px, 2.2vw, 30px);
     border-radius: 14px;
     font-family: 'Outfit', sans-serif;
-    font-size: 0.95rem;
+    font-size: clamp(0.86rem, 0.8vw + 0.35rem, 0.96rem);
     font-weight: 600;
     letter-spacing: 0.4px;
     cursor: pointer;
@@ -2363,6 +2373,8 @@ body.calendar-open .date-input-container {
     box-sizing: border-box;
     user-select: none;
     -webkit-user-select: none;
+    min-height: 46px;
+    white-space: nowrap;
 }
 
 /* Start Button: Glowing Primary Cyan */
@@ -3323,58 +3335,142 @@ body.calendar-open .date-input-container {
     }
 }
 
+@media (max-width: 1024px) {
+    .landing-bg-layer {
+        background-position: 62% center;
+        background-image: 
+            linear-gradient(90deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.80) 45%, rgba(0, 0, 0, 0.4) 75%, transparent 100%),
+            linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.85) 100%),
+            url('../data/cosmicastraxheroimage.png');
+    }
+}
+
 @media (max-width: 768px) {
+    .landing-bg-layer {
+        background-position: 50% 60%;
+        background-image: 
+            /* Top & bottom cinematic black gradients: framing the hero content and fading to pure black at footer */
+            linear-gradient(180deg, 
+                rgba(0, 0, 0, 0.94) 0%, 
+                rgba(0, 0, 0, 0.78) 25%, 
+                rgba(0, 0, 0, 0.16) 50%, 
+                rgba(0, 0, 0, 0.62) 75%, 
+                #000000 100%
+            ),
+            /* Cool atmospheric edge vignette: darkens borders, lets illuminated Earth arc radiate through with zero color cast */
+            radial-gradient(ellipse at 50% 56%, transparent 20%, rgba(0, 0, 0, 0.42) 60%, rgba(0, 0, 0, 0.92) 100%),
+            url('../data/cosmicastraxheroimage.png');
+    }
+    .landing-ambient-dust {
+        background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.40) 75%, rgba(0, 0, 0, 0.85) 100%);
+    }
     .landing-navbar {
-        padding: 12px 18px;
+        padding: 10px 16px;
     }
     .landing-hero {
-        padding: 16px 20px;
+        padding: clamp(14px, 2.8vh, 24px) clamp(16px, 4vw, 24px);
+        align-items: center;
+        justify-content: center;
     }
     .hero-content-card {
         padding: 0;
+        max-width: 520px;
+        margin: 0 auto;
+        align-items: center;
+        text-align: center;
+    }
+    .hero-badge {
+        font-size: 0.66rem;
+        padding: 4px 12px;
+        margin: 0 auto 12px auto;
+        letter-spacing: 0.9px;
+    }
+    .hero-title {
+        font-size: clamp(1.65rem, 5vw, 2.2rem);
+        margin: 0 auto 10px auto;
+        text-align: center;
+        line-height: 1.18;
+    }
+    .hero-subtitle {
+        font-size: clamp(0.82rem, 2.4vw, 0.90rem);
+        line-height: 1.5;
+        margin: 0 auto 18px auto;
+        max-width: 440px;
+        text-align: center;
+        color: #94a3b8;
     }
     .hero-actions {
-        flex-direction: column;
-        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
+        width: 100%;
     }
     .hero-btn {
-        width: 100%;
+        flex: 0 1 auto;
+        min-width: 155px;
+        max-width: 240px;
+        width: auto;
+        min-height: 44px;
+        padding: 10px 18px;
+        font-size: 0.88rem;
     }
     .landing-agencies-section {
-        padding: 12px 16px;
-        gap: 14px;
+        padding: 12px 18px;
+        gap: 12px;
         flex-direction: column;
         align-items: flex-start;
+        background: #000000;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     .initiator-brand-block {
         width: 100%;
         align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
     .initiator-subtext {
         font-size: 0.54rem;
+        letter-spacing: 1.2px;
+        height: auto;
     }
     .initiator-content-row {
         gap: 8px;
     }
     .initiator-logo-img {
         height: 24px;
-        max-width: 100px;
+        max-width: 105px;
     }
     .initiator-company-name {
         font-size: 0.85rem;
     }
     .initiator-motto {
         font-size: 0.52rem;
+        display: block;
     }
     .footer-divider-vertical {
         display: none;
     }
     .agencies-marquee-wrapper {
         width: 100%;
+        gap: 6px;
     }
     .agencies-tribute-heading {
         font-size: 0.56rem;
+        letter-spacing: 1.1px;
+        height: auto;
+    }
+    .marquee-track-container {
+        padding: 6px 0;
+        margin: -6px 0;
+    }
+    .agency-badge-pill {
+        padding: 4px 6px;
+        gap: 4px;
     }
     .agency-logo-img {
         height: 22px;
@@ -3427,6 +3523,108 @@ body.calendar-open .date-input-container {
     }
     .drawer-specs-table .table-val {
         width: 58%;
+    }
+}
+
+/* Compact Smartphones (Portrait) */
+@media (max-width: 420px) {
+    .landing-hero {
+        padding: 12px 14px;
+    }
+    .hero-badge {
+        font-size: 0.60rem;
+        letter-spacing: 0.7px;
+        padding: 3px 10px;
+        margin-bottom: 10px;
+    }
+    .hero-title {
+        font-size: clamp(1.42rem, 5.8vw, 1.75rem);
+        margin-bottom: 8px;
+    }
+    .hero-subtitle {
+        font-size: 0.80rem;
+        line-height: 1.45;
+        margin-bottom: 16px;
+    }
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 9px;
+        width: 100%;
+    }
+    .hero-btn {
+        width: 100%;
+        max-width: 290px;
+        min-height: 42px;
+        padding: 10px 16px;
+        font-size: 0.86rem;
+    }
+}
+
+/* Extra-Small Phones */
+@media (max-width: 350px) {
+    .landing-hero {
+        padding: 10px 12px;
+    }
+    .hero-title {
+        font-size: 1.34rem;
+    }
+    .hero-subtitle {
+        font-size: 0.76rem;
+        line-height: 1.4;
+    }
+    .hero-btn {
+        max-width: 100%;
+        font-size: 0.82rem;
+        min-height: 40px;
+    }
+}
+
+/* Landscape Mobile & Low-Height Screens */
+@media (max-height: 560px) and (orientation: landscape) {
+    .landing-bg-layer {
+        background-position: 68% center;
+        background-image: 
+            linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.82) 50%, rgba(0, 0, 0, 0.3) 80%, transparent 100%),
+            url('../data/cosmicastraxheroimage.png');
+    }
+    .landing-navbar {
+        padding: 6px 18px;
+    }
+    .landing-hero {
+        padding: 8px 24px;
+    }
+    .hero-content-card {
+        align-items: flex-start;
+        text-align: left;
+    }
+    .hero-badge {
+        margin: 0 0 6px 0;
+        padding: 2px 10px;
+        font-size: 0.62rem;
+    }
+    .hero-title {
+        font-size: 1.45rem;
+        margin-bottom: 6px;
+        text-align: left;
+    }
+    .hero-subtitle {
+        font-size: 0.78rem;
+        line-height: 1.35;
+        margin-bottom: 12px;
+        max-width: 520px;
+        text-align: left;
+    }
+    .hero-actions {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .hero-btn {
+        padding: 7px 18px;
+        font-size: 0.82rem;
+        min-height: 38px;
+        width: auto;
     }
 }
 
