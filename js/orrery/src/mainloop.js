@@ -211,17 +211,26 @@ export function animate(time) {
 
     TWEEN.update(time); // update tweens
     if (TWEEN.getAll().length == 0) { // lock on target after the tween
-        ORR.controls.target = (ORR.state.clickedLabel == "") ? new THREE.Vector3() : ORR.state.clickedPlanet.celestialPos;
-
-        if (ORR.state.following) {
-            const followPosition = ORR.controls.target;
-            const followDelta = ORR.state.lastFollow.sub(followPosition);
-            ORR.camera.translateX(followDelta.x);
-            ORR.camera.translateY(followDelta.y);
-            ORR.camera.translateZ(followDelta.z);
-            ORR.state.lastFollow = followPosition;
+        if (ORR.state.clickedLabel != "" && ORR.state.clickedPlanet && ORR.state.clickedPlanet.celestialPos) {
+            const currentPos = ORR.state.clickedPlanet.celestialPos;
+            if (ORR.state.lastFollow && (ORR.state.lastFollow.x !== 0 || ORR.state.lastFollow.y !== 0 || ORR.state.lastFollow.z !== 0)) {
+                const deltaX = currentPos.x - ORR.state.lastFollow.x;
+                const deltaY = currentPos.y - ORR.state.lastFollow.y;
+                const deltaZ = currentPos.z - ORR.state.lastFollow.z;
+                ORR.camera.position.x += deltaX;
+                ORR.camera.position.y += deltaY;
+                ORR.camera.position.z += deltaZ;
+            }
+            ORR.controls.target.copy(currentPos);
+            if (!ORR.state.lastFollow) {
+                ORR.state.lastFollow = new THREE.Vector3();
+            }
+            ORR.state.lastFollow.copy(currentPos);
         } else {
-            ORR.state.lastFollow = ORR.controls.target;
+            ORR.controls.target.set(0, 0, 0);
+            if (ORR.state.lastFollow) {
+                ORR.state.lastFollow.set(0, 0, 0);
+            }
         }
     }
 

@@ -153,6 +153,14 @@ export function clickTag(t) {
                 });
             }
         })
+        .onComplete(() => {
+            if (ORR.state.clickedPlanet && ORR.state.clickedPlanet.celestialPos) {
+                if (!ORR.state.lastFollow) {
+                    ORR.state.lastFollow = new THREE.Vector3();
+                }
+                ORR.state.lastFollow.copy(ORR.state.clickedPlanet.celestialPos);
+            }
+        })
         .start();
 
     const wikiHref = (ORR.state.clickedPlanet.wiki !== "default") ? ORR.state.clickedPlanet.wiki : "#";
