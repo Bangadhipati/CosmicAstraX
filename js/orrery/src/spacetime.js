@@ -156,7 +156,13 @@ export function orbitPath(i) {
 export function redraw(i) {
     ORR.orbitPlot.points = ORR.pointCount;
     ORR.system[i].updateOrbit();
-    ORR.paths[i].geometry = new THREE.BufferGeometry().setFromPoints( ORR.system[i].celestial );
+    const pathIdx = (typeof ORR.system[i].path !== "undefined") ? ORR.system[i].path : i;
+    if (ORR.paths[pathIdx]) {
+        if (ORR.paths[pathIdx].geometry) {
+            ORR.paths[pathIdx].geometry.dispose();
+        }
+        ORR.paths[pathIdx].geometry = new THREE.BufferGeometry().setFromPoints( ORR.system[i].celestial );
+    }
     ORR.orbitPlot.points = 1;
 }
 
@@ -331,7 +337,7 @@ export function setTime(time) {
     }
     ORR.orbitPlot.points = ORR.pointCount;
     for (let i = 0; i < ORR.precessing.length; i++) {
-        redraw(i);
+        redraw(ORR.precessing[i]);
     }
     ORR.orbitPlot.points = 1;
     ORR.times.speed = 8;

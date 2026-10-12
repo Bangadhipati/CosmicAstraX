@@ -53,12 +53,15 @@ export class Moon extends ORR.Body {
     updateOrbit() {
         // plot full orbit in local space
         this.localOrbit = this.longPoints(this.meanAnomaly, this.eccentricity, this.semiMajorAxis, ORR.orbitPlot.points);
-        this.celestial = []; // compute celestial coordinates; celestialPos is current location
-        for (let i=0; i<this.localOrbit.length; i++) {
+        this.celestial = []; // compute local planetary coordinates for orbit path
+        for (let i = 0; i < this.localOrbit.length; i++) {
             this.planetary = ORR.planetary(this.argPeriapsis, this.longAscNode, this.incStart, this.orbitRA, this.orbitDec, this.localOrbit[i].x, this.localOrbit[i].y, this.orbitRef, this.orbitId);
-            this.celestial.push(this.planetary.add(ORR.scene.children[ORR.system[this.orbitId].childId].position));
+            this.celestial.push(this.planetary.clone());
         }
-        this.celestialPos = this.celestial[0];
+        const curLocal = this.longPoints(this.meanAnomaly, this.eccentricity, this.semiMajorAxis, 1);
+        this.planetaryPos = ORR.planetary(this.argPeriapsis, this.longAscNode, this.incStart, this.orbitRA, this.orbitDec, curLocal[0].x, curLocal[0].y, this.orbitRef, this.orbitId);
+        const parentPos = (ORR.system[this.orbitId] && ORR.system[this.orbitId].celestialPos) ? ORR.system[this.orbitId].celestialPos : new THREE.Vector3(0, 0, 0);
+        this.celestialPos = this.planetaryPos.clone().add(parentPos);
     }
 
     /**
@@ -69,7 +72,8 @@ export class Moon extends ORR.Body {
         this.meanAnomaly += (this.lDot * dt);
         this.localOrbit = this.longPoints(this.meanAnomaly, this.eccentricity, this.semiMajorAxis);
         this.planetaryPos = ORR.planetary(this.argPeriapsis, this.longAscNode, this.incStart, this.orbitRA, this.orbitDec, this.localOrbit[0].x, this.localOrbit[0].y, this.orbitRef, this.orbitId);
-        this.celestialPos = this.planetaryPos.add(ORR.scene.children[ORR.system[this.orbitId].childId].position);
+        const parentPos = (ORR.system[this.orbitId] && ORR.system[this.orbitId].celestialPos) ? ORR.system[this.orbitId].celestialPos : new THREE.Vector3(0, 0, 0);
+        this.celestialPos = this.planetaryPos.clone().add(parentPos);
     }
 
     /**
@@ -83,9 +87,10 @@ export class Moon extends ORR.Body {
     longPoints(meanAnomaly, eccentricity, semiMajorAxis, points = 1) {
         const orbitArray = [];
         const span = Math.PI * 2 / points;
-        for (let i=0; i<points; i++) {
-            meanAnomaly += span;
-            const point = ORR.plotPoint(meanAnomaly, eccentricity, semiMajorAxis, points == 1);
+        const currentEccAnomaly = ORR.kepler(eccentricity, meanAnomaly);
+        for (let i = 0; i < points; i++) {
+            const eccAnomaly = (points === 1) ? currentEccAnomaly : (currentEccAnomaly + i * span);
+            const point = ORR.plotPoint(eccAnomaly, eccentricity, semiMajorAxis, false);
             orbitArray.push(point);
         }
         return orbitArray;

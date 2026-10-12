@@ -59,7 +59,8 @@ export class Comet extends ORR.Body {
         for (let i=0; i<this.localOrbit.length; i++) {
             this.celestial.push(ORR.celestial_THREE(this.argPeriapsis, this.longAscNode, this.inclination, this.localOrbit[i].x, this.localOrbit[i].y));
         }
-        this.celestialPos = this.celestial[0];
+        const curLocal = this.longPoints(this.meanLongitude, this.longPeriapsis, this.eccentricity, this.semiMajorAxis, 1);
+        this.celestialPos = ORR.celestial_THREE(this.argPeriapsis, this.longAscNode, this.inclination, curLocal[0].x, curLocal[0].y);
     }
 
     /**
@@ -85,9 +86,10 @@ export class Comet extends ORR.Body {
         const orbitArray = [];
         const span = Math.PI * 2 / points;
         let meanAnomaly = meanLongitude - longPeriapsis;
-        for (let i=0; i<points; i++) {
-            meanAnomaly += span;            
-            const point = ORR.plotPoint(meanAnomaly, eccentricity, semiMajorAxis, points == 1);
+        const currentEccAnomaly = ORR.kepler(eccentricity, meanAnomaly);
+        for (let i = 0; i < points; i++) {
+            const eccAnomaly = (points === 1) ? currentEccAnomaly : (currentEccAnomaly + i * span);
+            const point = ORR.plotPoint(eccAnomaly, eccentricity, semiMajorAxis, false);
             orbitArray.push(point);
         }
         return orbitArray;

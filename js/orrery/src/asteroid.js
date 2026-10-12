@@ -55,7 +55,8 @@ export class Asteroid extends ORR.Body {
         for (let i=0; i<this.localOrbit.length; i++) {
             this.celestial.push(ORR.celestial_THREE(this.argPeriapsis, this.longAscNode, this.inclination, this.localOrbit[i].x, this.localOrbit[i].y));
         }
-        this.celestialPos = this.celestial[0];
+        const curLocal = this.longPoints(this.meanAnomaly, this.eccentricity, this.semiMajorAxis, 1);
+        this.celestialPos = ORR.celestial_THREE(this.argPeriapsis, this.longAscNode, this.inclination, curLocal[0].x, curLocal[0].y);
     }
 
     /**
@@ -79,9 +80,10 @@ export class Asteroid extends ORR.Body {
     longPoints(meanAnomaly, eccentricity, semiMajorAxis, points = 1) {
         const orbitArray = [];
         const span = Math.PI * 2 / points;
-        for (let i=0; i<points; i++) {
-            meanAnomaly += span;
-            const point = ORR.plotPoint(meanAnomaly, eccentricity, semiMajorAxis, points == 1);
+        const currentEccAnomaly = ORR.kepler(eccentricity, meanAnomaly);
+        for (let i = 0; i < points; i++) {
+            const eccAnomaly = (points === 1) ? currentEccAnomaly : (currentEccAnomaly + i * span);
+            const point = ORR.plotPoint(eccAnomaly, eccentricity, semiMajorAxis, false);
             orbitArray.push(point);
         }
         return orbitArray;

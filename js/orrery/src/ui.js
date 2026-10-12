@@ -100,15 +100,35 @@ export function clickTag(t) {
         ORR.selectedPathMat.color.setHex(0xffd700); // Golden for non-planets
     }
     
-    ORR.paths[ORR.state.clickedPlanet.path].material = ORR.selectedPathMat;
-    if (ORR.system[t].type > 3) {
+    const sysId = Number(t);
+    if (ORR.paths[ORR.state.clickedPlanet.path]) {
+        ORR.paths[ORR.state.clickedPlanet.path].material = ORR.selectedPathMat;
+        try {
+            if (typeof ORR.redraw === "function" && typeof ORR.state.clickedPlanet.updateOrbit === "function") {
+                ORR.redraw(sysId);
+            }
+        } catch (e) {
+            console.warn("Could not redraw path for object", sysId, e);
+        }
+    }
+    if (ORR.system[sysId] && ORR.system[sysId].type > 3 && ORR.paths[ORR.state.clickedPlanet.path]) {
         ORR.scene.add(ORR.paths[ORR.state.clickedPlanet.path]);
     }
     $("#distToActive").remove();
     ORR.controls.minDistance = ORR.state.clickedPlanet.isSun ? 0.15 : 0.01;
+    const targetPos = ORR.state.clickedPlanet.celestialPos;
     const tweenTo = new TWEEN.Tween(ORR.controls.target)
-        .to({ x: ORR.state.clickedPlanet.celestialPos.x, y: ORR.state.clickedPlanet.celestialPos.y, z: ORR.state.clickedPlanet.celestialPos.z }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
-        .onUpdate(function () { this.to({ x: ORR.state.clickedPlanet.celestialPos.x, y: ORR.state.clickedPlanet.celestialPos.y, z: ORR.state.clickedPlanet.celestialPos.z }) })
+        .to({ x: targetPos.x, y: targetPos.y, z: targetPos.z }, 1000)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            if (ORR.state.clickedPlanet && ORR.state.clickedPlanet.celestialPos) {
+                tweenTo.to({
+                    x: ORR.state.clickedPlanet.celestialPos.x,
+                    y: ORR.state.clickedPlanet.celestialPos.y,
+                    z: ORR.state.clickedPlanet.celestialPos.z
+                });
+            }
+        })
         .start();
 
     const viewDistance = ORR.state.clickedPlanet.isSun ? 0.35 : Math.max(0.01, ORR.state.clickedPlanet.exagRadius * 2);
@@ -117,19 +137,21 @@ export function clickTag(t) {
     let dir = startCamPos.sub(startTarget).normalize();
     if (dir.lengthSq() < 0.1) dir.set(0, 0, 1);
 
-    new TWEEN.Tween(ORR.camera.position)
+    const tweenCam = new TWEEN.Tween(ORR.camera.position)
         .to({
-            x: ORR.state.clickedPlanet.celestialPos.x + dir.x * viewDistance,
-            y: ORR.state.clickedPlanet.celestialPos.y + dir.y * viewDistance,
-            z: ORR.state.clickedPlanet.celestialPos.z + dir.z * viewDistance
+            x: targetPos.x + dir.x * viewDistance,
+            y: targetPos.y + dir.y * viewDistance,
+            z: targetPos.z + dir.z * viewDistance
         }, 1000)
         .easing(TWEEN.Easing.Quadratic.InOut)
-        .onUpdate(function () {
-            this.to({
-                x: ORR.state.clickedPlanet.celestialPos.x + dir.x * viewDistance,
-                y: ORR.state.clickedPlanet.celestialPos.y + dir.y * viewDistance,
-                z: ORR.state.clickedPlanet.celestialPos.z + dir.z * viewDistance
-            });
+        .onUpdate(() => {
+            if (ORR.state.clickedPlanet && ORR.state.clickedPlanet.celestialPos) {
+                tweenCam.to({
+                    x: ORR.state.clickedPlanet.celestialPos.x + dir.x * viewDistance,
+                    y: ORR.state.clickedPlanet.celestialPos.y + dir.y * viewDistance,
+                    z: ORR.state.clickedPlanet.celestialPos.z + dir.z * viewDistance
+                });
+            }
         })
         .start();
 
@@ -144,7 +166,8 @@ export function clickTag(t) {
         $("#info img").parent("a").attr("target", "_blank");
     }
 
-    $("#infohead").html(ORR.state.clickedLabel[0].innerHTML);
+    const labelTitle = (ORR.state.clickedLabel && ORR.state.clickedLabel.length > 0 && ORR.state.clickedLabel[0]) ? ORR.state.clickedLabel[0].innerHTML : (ORR.state.clickedPlanet.label || ORR.state.clickedPlanet.name || "");
+    $("#infohead").html(labelTitle);
     const imgContainer = $(".wikipic-container");
     imgContainer.hide();
     const imgEl = $("#info img");
@@ -217,11 +240,13 @@ export function clickTag(t) {
  * @param {number} t - System ID
  */
 export function closeTag(t) {
-    t.removeClass("active");
+    if (t && typeof t.removeClass === "function") {
+        t.removeClass("active");
 
-    if (t.hasClass("tag3")) {
-        t.removeClass("tag3");
-        t.addClass("tag2");
+        if (t.hasClass("tag3")) {
+            t.removeClass("tag3");
+            t.addClass("tag2");
+        }
     }
     $("#minimized-panel").hide();
     ORR.state.clickedLabel = "";

@@ -24,7 +24,7 @@ export const fps = 60; // max FPS
 export const rates = [ -1/20/fps, -1/100/fps, -100/daysPerCent/fps, -20/daysPerCent/fps, -1/daysPerCent/fps, -1/24/daysPerCent/fps, -1/86400/daysPerCent/fps, 0, 1/86400/daysPerCent/fps, 1/24/daysPerCent/fps, 1/daysPerCent/fps, 20/daysPerCent/fps, 100/daysPerCent/fps, 1/100/fps, 1/20/fps]; // centuries per frame
 
 // constants
-export const pointCount = 180;
+export const pointCount = 720;
 export const initialFOV = 60;
 export const system = []; // the solar system as an associative array
 export const majorBodies = []; // bodies that scale on zoom

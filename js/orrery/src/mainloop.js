@@ -64,7 +64,7 @@ export function animate(time) {
 
     for (let i = 0; i < ORR.precessing.length; i++) {
         ORR.system[ORR.precessing[i]].precess(ORR.times.rate);
-        ORR.redraw(i);
+        ORR.redraw(ORR.precessing[i]);
     }
 
     for (let i = 0; i < ORR.system.length; i++) {
@@ -147,16 +147,9 @@ export function animate(time) {
         ORR.paths[ORR.moons[i].path].position.y = ORR.system[ORR.paths[ORR.moons[i].path].orbitId].celestialPos.y;
         ORR.paths[ORR.moons[i].path].position.z = ORR.system[ORR.paths[ORR.moons[i].path].orbitId].celestialPos.z;
     }
-    ORR.system[ORR.specialID.earth].baryPos = ORR.system[ORR.specialID.earth].celestialPos.clone().sub(ORR.system[ORR.specialID.moon].celestialPos).multiplyScalar(earthBary);
-    const earthBody = ORR.scene.children[ORR.system[ORR.specialID.earth].childId];
-    earthBody.position.x += ORR.system[ORR.specialID.earth].baryPos.x;
-    earthBody.position.y += ORR.system[ORR.specialID.earth].baryPos.y;
-    earthBody.position.z += ORR.system[ORR.specialID.earth].baryPos.z;
-    const plutoBaryOffset = ORR.system[ORR.specialID.pluto].celestialPos.clone().sub(ORR.system[ORR.specialID.charon].celestialPos).multiplyScalar(plutoBary,);
-    const plutoBody = ORR.scene.children[ORR.system[ORR.specialID.pluto].childId];
-    plutoBody.position.x += plutoBaryOffset.x;
-    plutoBody.position.y += plutoBaryOffset.y;
-    plutoBody.position.z += plutoBaryOffset.z;
+    if (typeof ORR.specialID.earth !== "undefined" && ORR.system[ORR.specialID.earth]) {
+        ORR.system[ORR.specialID.earth].baryPos = new THREE.Vector3(0, 0, 0);
+    }
 
     // update live info
     if (ORR.state.clickedLabel != "") {
