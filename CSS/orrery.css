@@ -2674,6 +2674,225 @@ body.calendar-open .date-input-container {
 }
 
 /* ==========================================================================
+   Space Agency Logo Hover Badge (Ultra-Premium Glassmorphism)
+   ========================================================================== */
+.agency-hover-badge {
+    position: fixed;
+    z-index: 999999;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -100%) translateY(8px) scale(0.95);
+    transition: 
+        opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+        left 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        top 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.22s;
+    will-change: transform, opacity, left, top;
+}
+
+.agency-hover-badge.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -100%) translateY(0) scale(1);
+}
+
+.agency-hover-badge.no-transition {
+    transition: none !important;
+}
+
+.agency-hover-badge .badge-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 16px 6px 12px;
+    background: linear-gradient(135deg, rgba(8, 14, 28, 0.94) 0%, rgba(13, 24, 46, 0.92) 100%);
+    border: 1px solid rgba(0, 243, 255, 0.42);
+    border-radius: 9999px;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+        0 12px 32px -4px rgba(0, 0, 0, 0.75),
+        0 0 24px -2px rgba(0, 243, 255, 0.25),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+}
+
+.agency-hover-badge .badge-glow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00f3ff;
+    box-shadow: 0 0 8px #00f3ff, 0 0 16px rgba(0, 243, 255, 0.8);
+    flex-shrink: 0;
+    animation: agencyBadgePulse 2s ease-in-out infinite;
+}
+
+@keyframes agencyBadgePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+        box-shadow: 0 0 8px #00f3ff, 0 0 16px rgba(0, 243, 255, 0.8);
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+        box-shadow: 0 0 12px #00f3ff, 0 0 22px rgba(0, 243, 255, 1);
+    }
+}
+
+.agency-hover-badge .badge-agency-abbr {
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #00f3ff;
+    text-shadow: 0 0 12px rgba(0, 243, 255, 0.7);
+    flex-shrink: 0;
+}
+
+.agency-hover-badge .badge-divider {
+    width: 1px;
+    height: 12px;
+    background: linear-gradient(180deg, transparent, rgba(0, 243, 255, 0.5), transparent);
+    flex-shrink: 0;
+}
+
+.agency-hover-badge .badge-agency-fullname {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #f8fafc;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.agency-hover-badge .badge-agency-country {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.60rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 2px 7px;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    margin-left: 2px;
+    line-height: 1.2;
+}
+
+.agency-hover-badge .badge-arrow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: rgba(11, 20, 38, 0.95);
+    border-right: 1px solid rgba(0, 243, 255, 0.42);
+    border-bottom: 1px solid rgba(0, 243, 255, 0.42);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.35);
+    z-index: 1;
+    pointer-events: none;
+    transition: transform 0.15s ease;
+}
+
+.agency-badge-pill {
+    cursor: pointer !important;
+}
+
+/* ==========================================================================
+   Responsive Adaptation for Tablets & Mobile Screens (Zero Text Clipping)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .agency-hover-badge {
+        max-width: calc(100vw - 20px);
+    }
+    .agency-hover-badge .badge-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 7px 14px 8px 14px;
+        border-radius: 14px;
+        gap: 5px 8px;
+        max-width: min(340px, calc(100vw - 20px));
+        white-space: normal;
+        text-align: center;
+        box-shadow: 
+            0 12px 30px -4px rgba(0, 0, 0, 0.85),
+            0 0 20px -2px rgba(0, 243, 255, 0.3),
+            inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    }
+    .agency-hover-badge .badge-glow-dot {
+        order: 1;
+    }
+    .agency-hover-badge .badge-agency-abbr {
+        order: 2;
+        font-size: 0.72rem;
+    }
+    .agency-hover-badge .badge-divider {
+        order: 3;
+        height: 10px;
+        opacity: 0.6;
+    }
+    .agency-hover-badge .badge-agency-country {
+        order: 4;
+        font-size: 0.56rem;
+        padding: 1px 6px;
+        margin-left: 0;
+    }
+    .agency-hover-badge .badge-agency-fullname {
+        order: 5;
+        flex-basis: 100%;
+        width: 100%;
+        max-width: 100%;
+        white-space: normal;
+        word-break: normal;
+        overflow: visible;
+        text-overflow: clip;
+        font-size: 0.73rem;
+        font-weight: 600;
+        line-height: 1.25;
+        color: #ffffff;
+        text-align: center;
+        letter-spacing: 0.2px;
+        padding-top: 1px;
+    }
+}
+
+@media (max-width: 480px) {
+    .agency-hover-badge {
+        max-width: calc(100vw - 16px);
+    }
+    .agency-hover-badge .badge-inner {
+        padding: 6px 12px 7px 12px;
+        border-radius: 12px;
+        gap: 4px 6px;
+        max-width: min(310px, calc(100vw - 16px));
+    }
+    .agency-hover-badge .badge-agency-abbr {
+        font-size: 0.68rem;
+    }
+    .agency-hover-badge .badge-agency-fullname {
+        font-size: 0.68rem;
+        line-height: 1.22;
+    }
+    .agency-hover-badge .badge-agency-country {
+        font-size: 0.52rem;
+        padding: 1px 5px;
+    }
+}
+
+/* ==========================================================================
    Comprehensive More Information Sidebar Drawer
    ========================================================================== */
 /* ==========================================================================
