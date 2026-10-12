@@ -1656,6 +1656,11 @@ input, textarea {
 }
 
 @media (min-width: 1025px) {
+    /* When no object is selected, hide the sidebar toggle button completely */
+    .glass-sidebar:not(.open):not(.collapsed) #toggle-sidebar-btn {
+        display: none !important;
+    }
+
     #toggle-sidebar-btn {
         position: absolute;
         left: -40px;
@@ -1673,7 +1678,7 @@ input, textarea {
         align-items: center;
         cursor: pointer;
         color: #64748b;
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
         box-shadow: -10px 0 20px rgba(0,0,0,0.4);
@@ -1682,7 +1687,9 @@ input, textarea {
 
     #toggle-sidebar-btn:hover {
         color: #00f3ff;
-        background: rgba(0, 243, 255, 0.1);
+        background: rgba(18, 22, 34, 0.95);
+        border-color: rgba(0, 243, 255, 0.3);
+        box-shadow: -8px 0 24px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 243, 255, 0.12);
     }
 
     .sidebar-arrow-icon {
@@ -1698,27 +1705,32 @@ input, textarea {
 
 #sidebar-close-btn {
     position: absolute;
-    top: 25px;
-    right: 25px;
+    top: 20px;
+    right: 18px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #94a3b8;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 10;
 }
 
+#sidebar-close-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
 #sidebar-close-btn:hover {
-    background: rgba(255, 51, 102, 0.15);
+    background: rgba(255, 51, 102, 0.12);
     color: #ff3366;
-    border-color: rgba(255, 51, 102, 0.4);
-    transform: rotate(90deg) scale(1.1);
+    border-color: rgba(255, 51, 102, 0.35);
+    transform: rotate(90deg) scale(1.05);
 }
 
 /* Sidebar Layout Overrides */
@@ -3768,9 +3780,25 @@ body .ui-tooltip,
         font-size: 1.7rem;
     }
 
-    /* WHEN COMPRESSED / CLOSED ON SMALLER SCREENS: 
-       Vertical button positioned on the right edge of the screen to expand it again */
-    .glass-sidebar:not(.open) #toggle-sidebar-btn,
+    /* When no object is selected, hide the sidebar toggle button completely */
+    .glass-sidebar:not(.open):not(.collapsed) #toggle-sidebar-btn {
+        display: none !important;
+    }
+
+    /* Close button sizing on smaller screens */
+    #sidebar-close-btn {
+        top: 20px !important;
+        right: 18px !important;
+        width: 28px !important;
+        height: 28px !important;
+    }
+    #sidebar-close-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    /* WHEN COMPRESSED ON SMALLER SCREENS: 
+       Vertical button docked on right edge of screen with premium restrained aesthetics */
     .glass-sidebar.collapsed #toggle-sidebar-btn {
         display: flex !important;
         position: absolute !important;
@@ -3779,67 +3807,69 @@ body .ui-tooltip,
         top: 50% !important;
         bottom: auto !important;
         transform: translateY(-50%) !important;
-        width: 32px !important;
+        width: 30px !important;
         height: auto !important;
-        min-height: 124px !important;
-        padding: 12px 2px !important;
-        background: rgba(12, 14, 22, 0.94) !important;
+        min-height: 116px !important;
+        padding: 10px 2px !important;
+        background: rgba(11, 14, 22, 0.92) !important;
         backdrop-filter: blur(25px) !important;
         -webkit-backdrop-filter: blur(25px) !important;
-        border: 1px solid rgba(0, 243, 255, 0.45) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-right: none !important;
-        border-radius: 12px 0 0 12px !important;
-        box-shadow: -8px 0 25px rgba(0, 0, 0, 0.75), 0 0 15px rgba(0, 243, 255, 0.2) !important;
+        border-radius: 10px 0 0 10px !important;
+        box-shadow: -6px 0 20px rgba(0, 0, 0, 0.6) !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 8px !important;
         z-index: 1005 !important;
         cursor: pointer !important;
-        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+        transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
     }
 
-    .glass-sidebar:not(.open) #toggle-sidebar-btn:hover,
+    /* Premium, elegant hover: subtle edge illumination without overpowering glow */
     .glass-sidebar.collapsed #toggle-sidebar-btn:hover {
-        background: rgba(0, 243, 255, 0.15) !important;
-        border-color: #00f3ff !important;
-        box-shadow: -10px 0 30px rgba(0, 243, 255, 0.45) !important;
+        background: rgba(18, 22, 34, 0.96) !important;
+        border-color: rgba(0, 243, 255, 0.35) !important;
+        box-shadow: -8px 0 24px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 243, 255, 0.12) !important;
     }
 
-    /* Show vertical text 'Object Info' when compressed or closed */
-    .glass-sidebar:not(.open) .vertical-sidebar-label,
+    /* Show vertical text 'Object Info' when compressed */
     .glass-sidebar.collapsed .vertical-sidebar-label {
         display: block !important;
         writing-mode: vertical-rl !important;
         text-orientation: mixed !important;
         transform: rotate(180deg) !important;
         font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
-        font-size: 0.62rem !important;
-        font-weight: 700 !important;
-        letter-spacing: 1.8px !important;
-        color: #cbd5e1 !important;
+        font-size: 0.6rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1.5px !important;
+        color: #94a3b8 !important;
         text-transform: uppercase !important;
         user-select: none !important;
-        transition: color 0.2s ease, text-shadow 0.2s ease !important;
+        transition: color 0.2s ease !important;
     }
 
-    .glass-sidebar:not(.open) #toggle-sidebar-btn:hover .vertical-sidebar-label,
     .glass-sidebar.collapsed #toggle-sidebar-btn:hover .vertical-sidebar-label {
-        color: #00f3ff !important;
-        text-shadow: 0 0 8px rgba(0, 243, 255, 0.7) !important;
+        color: #e2e8f0 !important;
+        text-shadow: 0 0 6px rgba(0, 243, 255, 0.25) !important;
     }
 
     /* Arrow points inward (<) to indicate tapping expands sidebar back */
-    .glass-sidebar:not(.open) #toggle-sidebar-btn .sidebar-arrow-icon,
     .glass-sidebar.collapsed #toggle-sidebar-btn .sidebar-arrow-icon {
         transform: rotate(180deg) !important;
-        width: 16px !important;
-        height: 16px !important;
+        width: 14px !important;
+        height: 14px !important;
+        color: #94a3b8 !important;
+        transition: color 0.2s ease !important;
+    }
+
+    .glass-sidebar.collapsed #toggle-sidebar-btn:hover .sidebar-arrow-icon {
         color: #00f3ff !important;
     }
 
     /* WHEN OPEN AND EXPANDED ON SMALLER SCREENS:
-       Prominent compressing arrow button positioned at top-left portion of the sidebar */
+       Compact, premium compressing arrow button positioned at top-left portion of the sidebar */
     .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn {
         display: flex !important;
         position: absolute !important;
@@ -3848,39 +3878,44 @@ body .ui-tooltip,
         right: auto !important;
         bottom: auto !important;
         transform: none !important;
-        width: 36px !important;
-        height: 36px !important;
+        width: 28px !important;
+        height: 28px !important;
         min-height: unset !important;
         padding: 0 !important;
-        background: rgba(255, 255, 255, 0.08) !important;
-        border: 1px solid rgba(0, 243, 255, 0.45) !important;
-        border-radius: 10px !important;
-        box-shadow: 0 0 14px rgba(0, 243, 255, 0.25) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
         z-index: 1005 !important;
         cursor: pointer !important;
-        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+        transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease !important;
     }
 
+    /* Premium restrained hover for the arrow button */
     .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn:hover {
-        background: rgba(0, 243, 255, 0.2) !important;
-        border-color: #00f3ff !important;
-        box-shadow: 0 0 18px rgba(0, 243, 255, 0.5) !important;
-        transform: scale(1.05) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(0, 243, 255, 0.35) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), 0 0 8px rgba(0, 243, 255, 0.15) !important;
+        transform: scale(1.04) !important;
     }
 
     /* Top compressing arrow button points right (into the edge) to compress the sidebar */
     .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn .sidebar-arrow-icon {
-        width: 18px !important;
-        height: 18px !important;
-        color: #00f3ff !important;
-        transition: transform 0.3s ease !important;
+        width: 14px !important;
+        height: 14px !important;
+        color: #94a3b8 !important;
+        transition: color 0.2s ease, transform 0.25s ease !important;
         transform: rotate(0deg) !important;
     }
 
-    /* When open (not collapsed), hide vertical text label so button stays a sleek square arrow at the top */
+    .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn:hover .sidebar-arrow-icon {
+        color: #00f3ff !important;
+    }
+
+    /* When open (not collapsed), hide vertical text label so button stays a sleek compact square at the top */
     .glass-sidebar.open:not(.collapsed) .vertical-sidebar-label {
         display: none !important;
     }

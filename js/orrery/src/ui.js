@@ -661,7 +661,7 @@ $("#sidebar-close-btn").on("click", function() {
     if (ORR.state.clickedLabel !== "") {
         closeTag(ORR.state.clickedLabel);
     }
-    $("#object-details-modal").removeClass("open").addClass("collapsed");
+    $("#object-details-modal").removeClass("open collapsed");
 });
 
 
