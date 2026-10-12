@@ -72,7 +72,7 @@
         <link rel="stylesheet" href="CSS/jquery-ui.min.css">
         <link rel="stylesheet" href="CSS/jquery-ui.structure.min.css">
         <link rel="stylesheet" href="CSS/jquery-ui.theme.min.css">
-        <link rel="stylesheet" href="CSS/orrery.css">
+        <link rel="stylesheet" href="CSS/orrery.css?v=2.6">
         <link rel="icon" type="image/x-icon" href="/favicon.ico">
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
         <link rel="apple-touch-icon" sizes="57x57" href="data/apple-icon-57x57.png">
@@ -629,9 +629,10 @@
             <!-- OBJECT DETAILS MODAL (Sidebar) -->
             <div id="object-details-modal" class="glass-sidebar">
                 <div id="toggle-sidebar-btn" aria-label="Toggle Sidebar">
-                    <svg id="sidebar-arrow" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="sidebar-arrow" class="sidebar-arrow-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
+                    <span class="vertical-sidebar-label">Object Info</span>
                 </div>
                 <button id="sidebar-close-btn" aria-label="Close & Deselect">
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -959,17 +960,36 @@
                 const toggleLayersBtn = document.getElementById('toggle-layers-btn');
                 const collapsedTab = document.getElementById('collapsed-tab');
 
-                if (leftPanel && toggleLayersBtn) {
-                    toggleLayersBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        leftPanel.classList.toggle('collapsed');
-                    });
-                }
+                if (leftPanel) {
+                    if (toggleLayersBtn) {
+                        toggleLayersBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            if (window.innerWidth <= 768) {
+                                leftPanel.classList.toggle('mobile-expanded');
+                            } else {
+                                leftPanel.classList.toggle('collapsed');
+                            }
+                        });
+                    }
 
-                if (leftPanel && collapsedTab) {
-                    collapsedTab.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        leftPanel.classList.remove('collapsed');
+                    if (collapsedTab) {
+                        collapsedTab.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            if (window.innerWidth <= 768) {
+                                leftPanel.classList.add('mobile-expanded');
+                            } else {
+                                leftPanel.classList.remove('collapsed');
+                            }
+                        });
+                    }
+
+                    // On smaller screens, clicking outside the panel collapses it back
+                    document.addEventListener('pointerdown', function(e) {
+                        if (window.innerWidth <= 768 && leftPanel.classList.contains('mobile-expanded')) {
+                            if (!leftPanel.contains(e.target)) {
+                                leftPanel.classList.remove('mobile-expanded');
+                            }
+                        }
                     });
                 }
 

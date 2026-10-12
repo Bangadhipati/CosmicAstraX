@@ -642,14 +642,18 @@ $("#clearSplash").on("click", function () {
     ORR.state.showSplash = false;
 });
 
-$("#toggle-sidebar-btn").on("click", function() {
+$("#toggle-sidebar-btn").on("click", function(e) {
+    e.stopPropagation();
     const modal = $("#object-details-modal");
-    if (modal.hasClass("collapsed")) {
-        modal.removeClass("collapsed");
-        $(this).find("polyline").attr("points", "9 18 15 12 9 6"); // Right arrow >
-    } else {
+    const isExpanded = modal.hasClass("open") && !modal.hasClass("collapsed");
+    if (isExpanded) {
         modal.addClass("collapsed");
-        $(this).find("polyline").attr("points", "15 18 9 12 15 6"); // Left arrow <
+    } else {
+        modal.addClass("open").removeClass("collapsed");
+        if (!ORR.state.clickedPlanet || $.isEmptyObject(ORR.state.clickedPlanet)) {
+            const earthId = (ORR.specialID && ORR.specialID.earth !== undefined) ? ORR.specialID.earth : 3;
+            clickTag(earthId);
+        }
     }
 });
 
@@ -657,6 +661,7 @@ $("#sidebar-close-btn").on("click", function() {
     if (ORR.state.clickedLabel !== "") {
         closeTag(ORR.state.clickedLabel);
     }
+    $("#object-details-modal").removeClass("open").addClass("collapsed");
 });
 
 

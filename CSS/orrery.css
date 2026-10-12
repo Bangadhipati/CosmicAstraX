@@ -1655,30 +1655,45 @@ input, textarea {
     transform: translateX(360px);
 }
 
-#toggle-sidebar-btn {
-    position: absolute;
-    left: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 80px;
-    background: rgba(10, 10, 15, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-right: none;
-    border-radius: 12px 0 0 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: #64748b;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(25px);
-    box-shadow: -10px 0 20px rgba(0,0,0,0.4);
-}
+@media (min-width: 1025px) {
+    #toggle-sidebar-btn {
+        position: absolute;
+        left: -40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 80px;
+        background: rgba(10, 10, 15, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        color: #64748b;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        box-shadow: -10px 0 20px rgba(0,0,0,0.4);
+        user-select: none;
+    }
 
-#toggle-sidebar-btn:hover {
-    color: #00f3ff;
-    background: rgba(0, 243, 255, 0.1);
+    #toggle-sidebar-btn:hover {
+        color: #00f3ff;
+        background: rgba(0, 243, 255, 0.1);
+    }
+
+    .sidebar-arrow-icon {
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        color: inherit;
+    }
+
+    /* Hide vertical text on desktop by default */
+    .vertical-sidebar-label {
+        display: none;
+    }
 }
 
 #sidebar-close-btn {
@@ -3638,6 +3653,237 @@ body .ui-tooltip,
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+}
+
+/* ==========================================================================
+   Mobile / Small Screens FILTERS Panel (Compressed by Default)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    #left-panel.modern-panel {
+        top: 68px;
+        left: 0;
+        width: min(280px, calc(100vw - 48px));
+        border-radius: 0 20px 20px 0;
+        transform: translateX(calc(-100% + 28px));
+        padding: 14px 16px;
+        box-shadow: 6px 12px 35px rgba(0, 0, 0, 0.65);
+    }
+
+    #left-panel.modern-panel .panel-header {
+        border-bottom: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #left-panel.modern-panel .filter-group,
+    #left-panel.modern-panel .header-title {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+    }
+
+    #left-panel.modern-panel .collapsed-tab {
+        display: flex;
+        opacity: 1;
+        width: 28px;
+    }
+
+    #left-panel.modern-panel .toggle-layers-btn {
+        position: absolute;
+        right: 4px;
+        top: 10px;
+        width: 22px;
+        height: 22px;
+        background: transparent;
+        border: none;
+    }
+
+    #left-panel.modern-panel .toggle-layers-btn .layer-arrow-icon {
+        width: 14px;
+        height: 14px;
+        transform: rotate(180deg);
+    }
+
+    /* When user clicks/opens on mobile */
+    #left-panel.modern-panel.mobile-expanded {
+        transform: translateX(0);
+        padding: 16px 18px;
+        box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.85);
+        border: 1px solid rgba(0, 243, 255, 0.25);
+    }
+
+    #left-panel.modern-panel.mobile-expanded .panel-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 0 0 12px 0;
+        padding: 0 2px 10px 4px;
+    }
+
+    #left-panel.modern-panel.mobile-expanded .filter-group,
+    #left-panel.modern-panel.mobile-expanded .header-title {
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity 0.25s ease 0.1s;
+    }
+
+    #left-panel.modern-panel.mobile-expanded .collapsed-tab {
+        display: none;
+        opacity: 0;
+    }
+
+    #left-panel.modern-panel.mobile-expanded .toggle-layers-btn {
+        position: static;
+        width: 26px;
+        height: 26px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #left-panel.modern-panel.mobile-expanded .toggle-layers-btn .layer-arrow-icon {
+        transform: rotate(0deg);
+    }
+
+    /* Object Details Sidebar on Smaller Screens */
+    .glass-sidebar {
+        width: min(340px, 86vw);
+        padding: 24px 18px;
+        transform: translateX(100%);
+    }
+
+    .glass-sidebar.open {
+        transform: translateX(0) !important;
+        overflow-y: auto !important;
+    }
+
+    /* When compressed or closed on mobile: slide off-screen to the right edge and allow docked button to project */
+    .glass-sidebar:not(.open),
+    .glass-sidebar.collapsed,
+    .glass-sidebar.open.collapsed {
+        transform: translateX(100%) !important;
+        overflow: visible !important;
+    }
+
+    /* Long object titles stay clean below the top action buttons */
+    .glass-sidebar .object-title {
+        margin-top: 18px;
+        font-size: 1.7rem;
+    }
+
+    /* WHEN COMPRESSED / CLOSED ON SMALLER SCREENS: 
+       Vertical button positioned on the right edge of the screen to expand it again */
+    .glass-sidebar:not(.open) #toggle-sidebar-btn,
+    .glass-sidebar.collapsed #toggle-sidebar-btn {
+        display: flex !important;
+        position: absolute !important;
+        left: auto !important;
+        right: 100% !important;
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        width: 32px !important;
+        height: auto !important;
+        min-height: 124px !important;
+        padding: 12px 2px !important;
+        background: rgba(12, 14, 22, 0.94) !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+        border: 1px solid rgba(0, 243, 255, 0.45) !important;
+        border-right: none !important;
+        border-radius: 12px 0 0 12px !important;
+        box-shadow: -8px 0 25px rgba(0, 0, 0, 0.75), 0 0 15px rgba(0, 243, 255, 0.2) !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        z-index: 1005 !important;
+        cursor: pointer !important;
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+    }
+
+    .glass-sidebar:not(.open) #toggle-sidebar-btn:hover,
+    .glass-sidebar.collapsed #toggle-sidebar-btn:hover {
+        background: rgba(0, 243, 255, 0.15) !important;
+        border-color: #00f3ff !important;
+        box-shadow: -10px 0 30px rgba(0, 243, 255, 0.45) !important;
+    }
+
+    /* Show vertical text 'Object Info' when compressed or closed */
+    .glass-sidebar:not(.open) .vertical-sidebar-label,
+    .glass-sidebar.collapsed .vertical-sidebar-label {
+        display: block !important;
+        writing-mode: vertical-rl !important;
+        text-orientation: mixed !important;
+        transform: rotate(180deg) !important;
+        font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-size: 0.62rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 1.8px !important;
+        color: #cbd5e1 !important;
+        text-transform: uppercase !important;
+        user-select: none !important;
+        transition: color 0.2s ease, text-shadow 0.2s ease !important;
+    }
+
+    .glass-sidebar:not(.open) #toggle-sidebar-btn:hover .vertical-sidebar-label,
+    .glass-sidebar.collapsed #toggle-sidebar-btn:hover .vertical-sidebar-label {
+        color: #00f3ff !important;
+        text-shadow: 0 0 8px rgba(0, 243, 255, 0.7) !important;
+    }
+
+    /* Arrow points inward (<) to indicate tapping expands sidebar back */
+    .glass-sidebar:not(.open) #toggle-sidebar-btn .sidebar-arrow-icon,
+    .glass-sidebar.collapsed #toggle-sidebar-btn .sidebar-arrow-icon {
+        transform: rotate(180deg) !important;
+        width: 16px !important;
+        height: 16px !important;
+        color: #00f3ff !important;
+    }
+
+    /* WHEN OPEN AND EXPANDED ON SMALLER SCREENS:
+       Prominent compressing arrow button positioned at top-left portion of the sidebar */
+    .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn {
+        display: flex !important;
+        position: absolute !important;
+        left: 18px !important;
+        top: 20px !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-height: unset !important;
+        padding: 0 !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(0, 243, 255, 0.45) !important;
+        border-radius: 10px !important;
+        box-shadow: 0 0 14px rgba(0, 243, 255, 0.25) !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 1005 !important;
+        cursor: pointer !important;
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+    }
+
+    .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn:hover {
+        background: rgba(0, 243, 255, 0.2) !important;
+        border-color: #00f3ff !important;
+        box-shadow: 0 0 18px rgba(0, 243, 255, 0.5) !important;
+        transform: scale(1.05) !important;
+    }
+
+    /* Top compressing arrow button points right (into the edge) to compress the sidebar */
+    .glass-sidebar.open:not(.collapsed) #toggle-sidebar-btn .sidebar-arrow-icon {
+        width: 18px !important;
+        height: 18px !important;
+        color: #00f3ff !important;
+        transition: transform 0.3s ease !important;
+        transform: rotate(0deg) !important;
+    }
+
+    /* When open (not collapsed), hide vertical text label so button stays a sleek square arrow at the top */
+    .glass-sidebar.open:not(.collapsed) .vertical-sidebar-label {
+        display: none !important;
+    }
 }
 
 
