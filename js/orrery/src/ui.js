@@ -114,8 +114,11 @@ export function clickTag(t) {
     if (ORR.system[sysId] && ORR.system[sysId].type > 3 && ORR.paths[ORR.state.clickedPlanet.path]) {
         ORR.scene.add(ORR.paths[ORR.state.clickedPlanet.path]);
     }
-    $("#distToActive").remove();
-    ORR.controls.minDistance = ORR.state.clickedPlanet.isSun ? 0.15 : 0.01;
+    const isSmallScreen = window.innerWidth <= 1024 || (ORR.camera && ORR.camera.aspect < 1.0);
+    const aspect = (ORR.camera && ORR.camera.aspect > 0) ? ORR.camera.aspect : (window.innerWidth / window.innerHeight);
+    const aspectFactor = isSmallScreen ? Math.min(2.5, Math.max(1.5, 1.0 / Math.max(0.2, aspect))) : 1.0;
+
+    ORR.controls.minDistance = ORR.state.clickedPlanet.isSun ? (isSmallScreen ? 0.35 : 0.15) : (isSmallScreen ? 0.04 : 0.01);
     const targetPos = ORR.state.clickedPlanet.celestialPos;
     const tweenTo = new TWEEN.Tween(ORR.controls.target)
         .to({ x: targetPos.x, y: targetPos.y, z: targetPos.z }, 1000)
@@ -131,7 +134,16 @@ export function clickTag(t) {
         })
         .start();
 
-    const viewDistance = ORR.state.clickedPlanet.isSun ? 0.35 : Math.max(0.01, ORR.state.clickedPlanet.exagRadius * 2);
+    let viewDistance;
+    if (ORR.state.clickedPlanet.isSun) {
+        viewDistance = isSmallScreen ? 0.85 : 0.45;
+    } else {
+        const baseMult = isSmallScreen ? 4.8 : 3.2;
+        const targetRadius = ORR.state.clickedPlanet.exagRadius || 0.02;
+        viewDistance = targetRadius * baseMult * aspectFactor;
+        const minDistance = isSmallScreen ? 0.18 : 0.06;
+        viewDistance = Math.max(minDistance, viewDistance);
+    }
     const startCamPos = ORR.camera.position.clone();
     const startTarget = ORR.controls.target.clone();
     let dir = startCamPos.sub(startTarget).normalize();
