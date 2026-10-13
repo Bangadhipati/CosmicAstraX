@@ -3,7 +3,7 @@
 
 ### *Interactive 3D Solar System Orrery Web App*
 
-<img width="2864" height="1536" alt="screenshot-1791722853700" src="https://github.com/user-attachments/assets/84575623-166b-4779-ba0c-521c2f4e9fca" />
+<img width="2864" height="1536" alt="image" src="https://github.com/user-attachments/assets/96682ef5-9e07-489f-992d-d37731a9f725" />
 
 ### 🔗 **[LIVE LINK](https://cosmicastrax.netlify.app)**
 
